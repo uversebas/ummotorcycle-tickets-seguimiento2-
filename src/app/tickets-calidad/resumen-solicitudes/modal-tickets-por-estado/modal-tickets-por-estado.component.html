@@ -1,0 +1,46 @@
+<div class="modal-header">
+    <h4 class="modal-title pull-left">View tickets with status {{estado}} of {{nombreRegion}}</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <progressbar *ngIf="mostrarProgreso" class="progress-striped active" [value]="150" type="info">
+                    Loading tickets...</progressbar>
+                <div class="table-responsive">
+                    <table class="table" id="tabla-tickets-estados">
+                        <caption></caption>
+                        <tr>
+                            <th id="ticketId">Ticket</th>
+                            <th id="creadoPor">Created by</th>
+                            <th id="creado">Created</th>
+                            <th id="posteventa">After sales assigned</th>
+                            <th id="fechaPostventa">Assignment date to after-sales</th>
+                            <th id="soporte">Support assigned</th>
+                            <th id="fechaSoporte">Assignment date to support</th>
+                            <th id="fechaResolucion">Resolve Date</th>
+                        </tr>
+                        <tr *ngFor="let ticket of ticketsByStatus | paginate: { id: 'paginador', itemsPerPage: 10, currentPage: p };">
+                            <td>{{ticket?.ticket}}</td>
+                            <td>{{ticket?.creador?.nombre}}</td>
+                            <td>{{ticket?.fechaCreacion | date: 'dd/MM/yyyy'}}</td>
+                            <td>{{ticket?.usuarioPostVenta?.nombre}}</td>
+                            <td>{{ticket?.fechaAsignacionPostventa | date: 'dd/MM/yyyy'}}</td>
+                            <td>{{ticket?.usuarioSoporte?.nombre}}</td>
+                            <td>{{ticket?.fechaAsignacionSoporte | date: 'dd/MM/yyyy'}}</td>
+                            <td>{{ticket?.fechaResuelto | date: 'dd/MM/yyyy'}}</td>
+                        </tr>
+                    </table>
+                </div>
+                <!-- Paginador -->
+                <div class="col-md-12">
+                    <pagination-controls id="paginador" directionLinks="true" responsive="true" previousLabel="Previous"
+                        nextLabel="Next" (pageChange)="p = $event"></pagination-controls>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

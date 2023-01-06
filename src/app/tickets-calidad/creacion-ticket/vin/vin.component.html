@@ -1,0 +1,26 @@
+<form [formGroup]="vinForm">
+  <div class="form-group row">
+    <div class="col-lg-1 index-number">
+      <span class="indice">{{vin.indice}}</span>
+    </div>
+    <div class="col-lg-10">
+      <label for="vin" class="form-control-label text-uppercase">VIN</label>
+      <ng-select id="vin" name="vin" formControlName="vin" class="form-control" labelForId="vin"
+        placeholder="Look for a VIN code" [items]="vinMaestros" bindLabel="nombre" bindValue="nombre"
+        notFoundText="No VIN found" (change)="seleccionarVin($event)"
+        [ngClass]="{ 'is-invalid': submitted && f.vin.errors }" tooltip="{{ayudasContextuales[12]?.textoAyuda}}">
+      </ng-select>
+      <div *ngIf="submitted && f.vin.errors" class="invalid-feedback">
+        <div *ngIf="f.vin.errors.required">This field is required
+        </div>
+        <div *ngIf="f.vin.errors?.minlength">
+          VIN debe tener 17 dígitos.
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-1 recycle-bin">
+      <span class="fas fa-trash-alt" *ngIf="cantidadVines > 1 && cantidadVines === vin.indice"
+        (click)="eliminar()"></span>
+    </div>
+  </div>
+</form>

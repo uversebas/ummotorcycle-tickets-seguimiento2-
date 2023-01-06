@@ -1,0 +1,331 @@
+@import "~@ng-select/ng-select/themes/default.theme.css";
+/* You can add global styles to this file, and also import other style files */
+
+.ng-select-container {
+  padding: 0.4rem 0.8rem !important;
+  font-size: 0.9rem !important;
+  line-height: 1.5 !important;
+  color: #495057 !important;
+  background-color: transparent !important;
+  border: none !important;
+  border-radius: 2rem !important;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out !important;
+  margin-top: -7px !important;
+  margin-left: -20px !important;
+}
+
+.ng-select.ng-select-multiple
+  .ng-select-container
+  .ng-value-container
+  .ng-value
+  .ng-value-label {
+  display: inline-block;
+  padding: 1px 5px;
+  color: white;
+}
+
+.ng-select.ng-select-multiple
+  .ng-select-container
+  .ng-value-container
+  .ng-value
+  .ng-value-icon:hover {
+  background-color: transparent;
+}
+
+.ng-select.ng-select-multiple
+  .ng-select-container
+  .ng-value-container
+  .ng-value
+  .ng-value-icon.left {
+  border-right: #92b335 !important;
+  color: white;
+}
+
+ng-select#fase {
+  height: auto;
+}
+
+ng-select#fase .ng-value .ng-star-inserted {
+  background: #92b335 !important;
+}
+
+.invalid-images {
+  width: 100%;
+  margin-top: 0.25rem;
+  font-size: 80%;
+  color: #e74a3b;
+}
+
+.zona-botones {
+  text-align: right;
+}
+
+.botonera {
+  margin: 20px;
+}
+
+.um-success {
+  color: #fff;
+  background-color: #f37736;
+  border-color: #f37736;
+  width: 220px;
+}
+
+.um-success:hover, .um-success:focus, .um-success:not(:disabled):not(.disabled):active {
+  color: #fff;
+  background-color: #002a54 !important;
+  border-color: #002a54 !important;
+}
+
+.cancelar {
+  background-color: #636366;
+  border-color: #636366;
+  width: 220px;
+}
+
+.btn-file {
+  background-color: #f37736;
+  border-color: #f37736;
+  color: #fff;
+}
+
+.btn-file:hover, .btn-file:focus, .btn-file:not(:disabled):not(.disabled):active {
+  background-color: #231f20;
+  border-color: #231f20;
+  color: #fff;
+}
+
+.limpiar, .limpiar:hover, .limpiar:focus, .limpiar:not(:disabled):not(.disabled):active {
+  background-color: #636366 !important;
+  border-color: #636366 !important;
+  color: #fff;
+}
+
+.recycle-bin, .index-number {
+  margin-top: 40px;
+  text-align: center;
+}
+
+.table.dataTable.dtr-inline.collapsed > tbody > tr > td.dtr-control:before, table.dataTable.dtr-inline.collapsed > tbody > tr > th.dtr-control:before {
+  background-color: #f37736 !important;
+}
+
+table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td.dtr-control:before, table.dataTable.dtr-inline.collapsed > tbody > tr.parent > th.dtr-control:before {
+  content: "-";
+  background-color: #002a54 !important;
+}
+
+.thead-tickets {
+  background-color: #002a54;
+  color: #fff;
+  text-align: center;
+}
+
+.vins-box {
+  background: #edf0f5;
+  padding: 20px;
+  border-radius: 16px;
+  max-height: 400px;
+  overflow: auto;
+}
+
+.vins-erros {
+  background: #f0c6c2;
+  padding: 20px;
+  border-radius: 16px;
+  max-height: 400px;
+  overflow: auto;
+}
+
+.documento-proveedor {
+  background: #edf0f5;
+  padding: 20px;
+  border-radius: 16px;
+  max-height: 400px;
+  overflow: auto;
+}
+
+.icono-excel {
+  margin: 10px;
+}
+
+.tooltip-inner {
+  background-color: #f37736;
+  color: #fff;
+  width: 100%;
+}
+
+.tooltip.top .tooltip-arrow:before, .tooltip.top .tooltip-arrow {
+  border-top-color: #f37736;
+}
+
+.accion-solicitud{
+  color: #002a54 !important;
+}
+
+.tabla-solicitudes {
+  width: 100%;
+  font-size: small;
+  word-wrap: break-word;
+}
+
+.tabla-ver-solicitudes {
+  width: 100%;
+  text-align: center;
+}
+
+.dataTables_length {
+  margin-top: 15px !important;
+}
+
+.dt-buttons {
+  margin-top: 15px !important;
+}
+
+.label-status-created {
+  margin-left: 20px;
+  color: white !important;
+  background-color: #f37736;
+  font-size: 14px;
+}
+
+.label-status-assigned-to-after-sales {
+  margin-left: 20px;
+  color: white !important;
+  background-color: #002B54;
+  font-size: 14px;
+}
+
+.label-status-after-sales-approved {
+  margin-left: 20px;
+  color: white !important;
+  background-color:olivedrab;
+  font-size: 14px;
+}
+
+.label-status-request-for-customer-information {
+  margin-left: 20px;
+  color: white !important;
+  background-color:darkcyan;
+  font-size: 14px;
+}
+
+.label-status-assigned-to-support {
+  margin-left: 20px;
+  color: white !important;
+  background-color:gold;
+  font-size: 14px;
+}
+
+.label-status-suppliers-feedback {
+  margin-left: 20px;
+  color: white !important;
+  background-color:grey;
+  font-size: 14px;
+}
+
+.label-status-resolved {
+  margin-left: 20px;
+  color: white !important;
+  background-color:limegreen;
+  font-size: 14px;
+}
+
+.button-home {
+  display: inline-block;
+  border-radius: 4px;
+  background-color: #f37736;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  padding: 20px;
+  width: 200px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.button-home span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.button-home span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.wrimagecard{	
+	margin-top: 0;
+    margin-bottom: 1.5rem;
+    text-align: left;
+    position: relative;
+    background: #fff;
+    box-shadow: 12px 15px 20px 0px rgba(46,61,73,0.15);
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+.wrimagecard .fa{
+	position: relative;
+    font-size: 70px;
+}
+.wrimagecard-topimage_header{
+padding: 20px;
+text-align: center;
+}
+a.wrimagecard:hover, .wrimagecard-topimage:hover {
+    box-shadow: 2px 4px 8px 0px rgba(46,61,73,0.2);
+}
+.wrimagecard-topimage a {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+.wrimagecard-topimage_title {
+    padding: 20px 24px;
+    height: 80px;
+    padding-bottom: 0.75rem;
+    position: relative;
+}
+.wrimagecard-topimage a {
+    border-bottom: none;
+    text-decoration: none;
+    color: #525c65;
+    transition: color 0.3s ease;
+}
+.badge-total {
+  color: black;
+  font-size: 100%;
+}
+
+.celda-total {
+  text-align: center;
+}
+
+.tabla-totales-estados {
+  border: 1px solid black;
+  border-collapse: collapse;
+  float: left;
+  margin: 20px;
+}
+
+/** Comentarios 
+
+div i.fa { display: none; }
+div img { display: block; }
+
+div.show-icon i.fa { display: inline-block; }
+div.show-icon img { display: none; }
+
+/** Fin comentarios **/
+
+
+
+
+

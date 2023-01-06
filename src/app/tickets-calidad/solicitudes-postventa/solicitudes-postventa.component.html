@@ -1,0 +1,51 @@
+<table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+    class="table-striped table-xl table-responsive-xl tabla-solicitudes">
+    <caption class="caption-mis-solicitudes"></caption>
+    <thead class="thead-tickets">
+        <tr>
+            <th class="none" id="id"><span style="display: none;">ID SharePoint</span></th>
+            <th class="all" id="id" scope="col">Ticket</th>
+            <th class="all" id="status">Status</th>
+            <th class="all" id="region">Region</th>
+            <th class="all" id="nombreCliente">Customer Name</th>
+            <th class="all" id="apellidoCliente">Customer Last Name</th>
+            <th class="all" id="emailCliente">Customer Email</th>
+            <th class="all" id="asunto">Subject</th>
+            <th class="all" id="numeroPi">PI Number</th>
+            <th class="all" id="motorCC">Engine CC</th>
+            <th class="all" id="fallo">Failure Type</th>
+            <th class="all" id="modelo">Model Name</th>
+            <th class="all" id="tiempo">Time</th>
+            <th class="all" id="verTicket" scope="col"></th>
+            <th class="none" id="descripcionFalla">Failure Description</th>
+            <th class="none" id="posibleSolucion">If you find a solution comment
+                us</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let solicitud of solicitudes">
+            <th scope="row"><span style="display: none;">{{solicitud.id}}</span></th>
+            <th scope="row">{{solicitud.ticket}}</th>
+            <th scope="row">{{solicitud.estado}}</th>
+            <th scope="row">{{solicitud.region?.nombre}}</th>
+            <th scope="row">{{solicitud.nombreCliente}}</th>
+            <th scope="row">{{solicitud.apellidoCliente}}</th>
+            <th scope="row">{{solicitud.emailCliente}}</th>
+            <th scope="row">{{solicitud.asunto}}</th>
+            <th scope="row">{{solicitud.numeroPi}}</th>
+            <th scope="row">{{solicitud.motorCC}}</th>
+            <th scope="row">{{solicitud.fallo?.nombre}}</th>
+            <th scope="row">{{solicitud.modelo?.nombre}}</th>
+            <th scope="row">{{solicitud.tiempoProceso}}</th>
+            <th scope="row">
+                <a tooltip="View ticket" class="icon text-white accion-solicitud"><em class="fas fa-edit"
+                        routerLink="/quality-tickets/manage-ticket/{{solicitud.id}}" routerLinkActive="active"></em></a>
+            </th>
+            <th scope="row">{{solicitud.descripcionFalla}}</th>
+            <th scope="row">{{solicitud.posibleSolucion}}</th>
+        </tr>
+    </tbody>
+</table>
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Processing...</p>
+</ngx-spinner>

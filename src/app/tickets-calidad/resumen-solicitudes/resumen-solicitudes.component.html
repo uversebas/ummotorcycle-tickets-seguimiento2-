@@ -1,0 +1,77 @@
+<div class="container-fluid">
+
+  <div *ngIf="totalesPorRegion.length > 0;else resumenVacio" class="row">
+    <div *ngFor="let regionTotal of totalesPorRegion" class="col-md-3 col-sm-4">
+      <div class="wrimagecard wrimagecard-topimage">
+        <a>
+          <div class="wrimagecard-topimage_header" style="background-color: rgba(121, 90, 71, 0.1)">
+            <i class="fa fa-motorcycle" style="color:#795a47"> </i>
+          </div>
+          <div class="wrimagecard-topimage_title">
+            <h4>{{regionTotal?.nombreRegion}}
+              <div class="pull-right badge badge-total" id="WrNavigation">{{regionTotal?.total}}</div>
+            </h4>
+          </div>
+        </a>
+      </div>
+    </div>
+    <br />
+    <div>
+      <table class="table" *ngFor="let region of totalesPorRegion" class="tabla-totales-estados">
+        <caption></caption>
+        <th id="header" colspan="2" style="text-align: center;">{{region?.nombreRegion}}</th>
+        <tr>
+          <th id="estado">Status</th>
+          <th id="total">Total</th>
+        </tr>
+        <tr>
+          <td><a href="javascript:void(0)"
+              (click)="abrirModalTicketsPorEstado(region?.nombreRegion, 'Created')">Created</a></td>
+          <td class="celda-total">{{obtenerTotalPorRegionyEstado(region?.nombreRegion, 'Created')}}</td>
+        </tr>
+        <tr>
+          <td><a href="javascript:void(0)"
+              (click)="abrirModalTicketsPorEstado(region?.nombreRegion, 'Assigned to after-sales')">Assigned to
+              after-sales</a></td>
+          <td class="celda-total">{{obtenerTotalPorRegionyEstado(region?.nombreRegion, 'Assigned to after-sales')}}</td>
+        </tr>
+        <tr>
+          <td><a href="javascript:void(0)"
+              (click)="abrirModalTicketsPorEstado(region?.nombreRegion, 'Request for customer information')">Request for
+              customer information</a></td>
+          <td class="celda-total">{{obtenerTotalPorRegionyEstado(region?.nombreRegion, 'Request for customer
+            information')}}</td>
+        </tr>
+        <tr>
+          <td><a href="javascript:void(0)"
+              (click)="abrirModalTicketsPorEstado(region?.nombreRegion, 'Assigned to support')">Assigned to support</a>
+          </td>
+          <td class="celda-total">{{obtenerTotalPorRegionyEstado(region?.nombreRegion, 'Assigned to support')}}</td>
+        </tr>
+        <tr>
+          <td><a href="javascript:void(0)"
+              (click)="abrirModalTicketsPorEstado(region?.nombreRegion, 'Suppliers feedback')">Suppliers feedback</a>
+          </td>
+          <td class="celda-total">{{obtenerTotalPorRegionyEstado(region?.nombreRegion, 'Suppliers feedback')}}</td>
+        </tr>
+        <tr>
+          <td><a href="javascript:void(0)"
+              (click)="abrirModalTicketsPorEstado(region?.nombreRegion, 'Resolved')">Resolved</a></td>
+          <td class="celda-total">{{obtenerTotalPorRegionyEstado(region?.nombreRegion, 'Resolved')}}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <ng-template #resumenVacio>
+    <div class="alert alert-info">
+      <strong>Info!</strong> There are no requests to display at this time.
+    </div>
+  </ng-template>
+
+</div>
+
+<br />
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+  <p style="font-size: 20px; color: white">Processing...</p>
+</ngx-spinner>

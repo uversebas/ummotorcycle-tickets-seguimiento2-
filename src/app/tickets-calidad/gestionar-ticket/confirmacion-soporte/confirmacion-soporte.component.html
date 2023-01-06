@@ -1,0 +1,28 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left">Assign support user</h4>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="cerrarModal()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<form *ngIf="formulario" [formGroup]="formulario" (ngSubmit)="onSubmit()">
+  <div class="modal-body">
+    <div class="form-group row">
+      <div class="col-lg-12">
+        <label for="hitos" class="form-control-label text-uppercase">Support users </label>
+        <ng-select id="user" name="user" formControlName="user" class="form-control" labelForId="user"
+          placeholder="Look for a after sales user" [items]="usuariosSoporte" bindLabel="nombre" bindValue="nombre"
+          notFoundText="No user found" (change)="seleccionarUsuario($event)"
+          [ngClass]="{ 'is-invalid': submitted && f.user.errors }">
+        </ng-select>
+        <div *ngIf="submitted && f.user.errors" class="invalid-feedback">
+          <div *ngIf="f.user.errors.required">This field is required
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary botonera" (click)="cerrarModal()">Cancel</button>
+    <button type="submit" class="btn btn-primary botonera">Save</button>
+  </div>
+</form>

@@ -1,0 +1,42 @@
+<form [formGroup]="documentoForm">
+  <div class="form-group row">
+    <div class="col-lg-1 index-number">
+      <span class="indice"></span>
+    </div>
+    <div class="col-lg-5">
+      <label for="documento" class="form-control-label text-uppercase">type</label>
+      <select id="tipo" name="tipo" formControlName="tipo" class="form-control" [(ngModel)]="tipoDocumentoSeleccionado"
+        [ngClass]="{ 'is-invalid': submitted && f.tipo.errors }" (change)="seleccionarTipo()">
+        <option hidden value="null" disabled selected>
+          Select document type
+        </option>
+        <option [ngValue]="tipo" *ngFor="let tipo of tiposDocumentos">
+          {{ tipo.nombre }}
+        </option>
+      </select>
+      <div *ngIf="submitted && f.tipo.errors" class="invalid-feedback">
+        <div *ngIf="f.tipo.errors.required">
+          This field is required
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-5" *ngIf="habilitado">
+      <label for="documento" class="form-control-label text-uppercase">document</label><br>
+      <input type="file" id="documento" name="documento" formControlName="documento" (change)="subirDocumento($event)"
+        [ngClass]="{ 'is-invalid': submitted && f.documento.errors }">
+      <div *ngIf="submitted && f.documento.errors" class="invalid-feedback">
+        <div *ngIf="f.documento.errors.required">This field is required</div>
+      </div>
+    </div>
+    <div class="col-lg-5" *ngIf="!habilitado">
+      <label for="documento" class="form-control-label text-uppercase">document</label><br>
+      <a href="{{documentoSoporte.documento.url}}" download tooltip="{{documentoSoporte.documento.nombre}}">
+        <img src="/assets/images/document.png" alt="document">
+      </a>
+    </div>
+    <div class="col-lg-1 recycle-bin" *ngIf="habilitado">
+      <span class="fas fa-trash-alt" *ngIf="cantidadDocumentos > 1 && cantidadDocumentos === documentoSoporte.indice"
+        (click)="eliminar()"></span>
+    </div>
+  </div>
+</form>

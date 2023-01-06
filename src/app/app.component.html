@@ -1,0 +1,172 @@
+<body id="page-top">
+  <div id="wrapper">
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" routerLink="/quality-tickets/home"
+        routerLinkActive="active">
+        <div class="sidebar-brand-icon rotate-n-15">
+          <i class="fas fa-laugh-wink"></i>
+        </div>
+        <div class="sidebar-brand-text mx-3">
+          <img alt="logo" src="/assets/images/logo.png" />
+        </div>
+      </a>
+      <hr class="sidebar-divider my-0">
+      <li class="nav-item active">
+        <a class="nav-link" routerLink="/quality-tickets/home" routerLinkActive="active">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>QUALITY TICKETS</span></a>
+      </li>
+
+
+      <hr class="sidebar-divider">
+
+      <div class="sidebar-heading">
+        SYSTEM
+      </div>
+
+      <li *ngIf="esAdministrador" class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
+          aria-controls="collapseTwo">
+          <i class="fas fa-fw fa-cog"></i>
+          <span>Administration</span>
+        </a>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Administration area:</h6>
+            <a class="collapse-item"
+              href="https://ummotorcycles.sharepoint.com/sites/quality-reports/_layouts/15/user.aspx"
+              target="_blank">User
+              Management</a>
+            <a class="collapse-item"
+              href="https://ummotorcycles.sharepoint.com/sites/quality-reports/Lists/RegionSettings/AllItems.aspx"
+              target="_blank">Regions</a>
+            <a class="collapse-item"
+              href="https://ummotorcycles.sharepoint.com/sites/quality-reports/Lists/ContextualAids/AllItems.aspx"
+              target="_blank">Contextual aids</a>
+            <a class="collapse-item"
+              href="https://ummotorcycles.sharepoint.com/sites/quality-reports/Lists/Models/AllItems.aspx"
+              target="_blank">Models</a>
+            <a class="collapse-item"
+              href="https://ummotorcycles.sharepoint.com/sites/quality-reports/Lists/EngineCC/AllItems.aspx"
+              target="_blank">Engine C.C</a>
+            <a class="collapse-item"
+              href="https://ummotorcycles.sharepoint.com/sites/quality-reports/Lists/FailureTypes/AllItems.aspx"
+              target="_blank">Failure Types</a>
+            <a class="collapse-item"
+              href="https://ummotorcycles.sharepoint.com/sites/quality-reports/Lists/Vins/AllItems.aspx"
+              target="_blank">Vins</a>
+            <a class="collapse-item"
+              href="https://ummotorcycles.sharepoint.com/sites/quality-reports/Lists/EmailTemplate/AllItems.aspx"
+              target="_blank">Email templates</a>
+            <a class="collapse-item"
+              href="https://ummotorcycles.sharepoint.com/sites/quality-reports/Lists/Factories/AllItems.aspx"
+              target="_blank">Factories</a>
+            <a class="collapse-item"
+              href="https://ummotorcycles.sharepoint.com/sites/quality-reports/Lists/FailureCategory/AllItems.aspx"
+              target="_blank">Failure Categories</a>
+            <a class="collapse-item"
+              href="https://ummotorcycles.sharepoint.com/sites/quality-reports/Lists/SupplierDocuments/AllItems.aspx"
+              target="_blank">Supplier Documents</a>
+            <a class="collapse-item" routerLink="/quality-tickets/repeted-vins" routerLinkActive="active">Duplicate VINS
+            </a>
+            <a class="collapse-item" routerLink="/quality-tickets/summary-of-requests" routerLinkActive="active">Summary
+              of requests
+            </a>
+            <a class="collapse-item" routerLink="/quality-tickets/all-requests" routerLinkActive="active">All requests
+            </a>
+          </div>
+        </div>
+      </li>
+
+
+      <li *ngIf="esAdministrador || esCliente" class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+          aria-expanded="true" aria-controls="collapseUtilities">
+          <i class="fas fa-fw fa-wrench"></i>
+          <span>Customer</span>
+        </a>
+        <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Customer area:</h6>
+            <a class="collapse-item" routerLink="/quality-tickets/create-request" routerLinkActive="active">Create
+              Request</a>
+            <a class="collapse-item" routerLink="/quality-tickets/my-requests" routerLinkActive="active">My Requests</a>
+          </div>
+        </div>
+      </li>
+
+      <li *ngIf="esAdministrador || esPostVenta" class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true"
+          aria-controls="collapsePages">
+          <i class="fas fa-fw fa-folder"></i>
+          <span>After Sales</span>
+        </a>
+        <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">After Sales area:</h6>
+            <a class="collapse-item" routerLink="/quality-tickets/after-sales-requests" routerLinkActive="active">After
+              Sales requests</a>
+          </div>
+        </div>
+      </li>
+
+      <li *ngIf="esAdministrador || esSoporte" class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSupport"
+          aria-expanded="true" aria-controls="collapseSupport">
+          <i class="fas fa-fw fa-chart-area"></i>
+          <span>Support</span>
+        </a>
+        <div id="collapseSupport" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Support area:</h6>
+            <a class="collapse-item" routerLink="/quality-tickets/support-requests" routerLinkActive="active">Support
+              requests</a>
+          </div>
+        </div>
+      </li>
+
+      <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+      </div>
+    </ul>
+
+    <div id="content-wrapper" class="d-flex flex-column">
+
+      <div id="content">
+
+        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+          <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+            <i class="fa fa-bars"></i>
+          </button>
+          <ul class="navbar-nav ml-auto">
+            <div class="topbar-divider d-none d-sm-block"></div>
+            <li class="nav-item dropdown no-arrow">
+              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{nombreUsuario}}</span>
+                <img alt="" class="img-profile rounded-circle" src="/assets/images/undraw_profile.svg">
+              </a>
+              <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                <a class="dropdown-item" href="javascript:void(0)" (click)="salir()" data-toggle="modal">
+                  <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Logout
+                </a>
+              </div>
+            </li>
+          </ul>
+        </nav>
+        <div class="container-fluid">
+          <div class="contenido-principal">
+            <router-outlet></router-outlet>
+          </div>
+        </div>
+      </div>
+      <footer class="sticky-footer bg-white">
+      </footer>
+    </div>
+  </div>
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+</body>

@@ -1,0 +1,180 @@
+<div class="col-lg-12 mb-5">
+  <div class="card">
+    <div class="card-header">
+      <h3 class="h6 text-uppercase mb-0">Quality report tickets</h3>
+    </div>
+    <ng-container *ngIf="mostrarSolucionCliente">
+      <br>
+      <app-ver-solucion-cliente  [ticket]="ticket"></app-ver-solucion-cliente>
+      <br>
+    </ng-container>
+    <div class="progress">
+      <div class="progress-bar" role="progressbar" attr.aria-valuenow="{{avance}}" aria-valuemin="0" aria-valuemax="100"
+        [style.width.%]="avance">
+        {{avance}}%
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="form-group row">
+        <fieldset class="col-12 col-lg-12 px-3">
+          <legend>Customer data</legend>
+          <div class="form-group row">
+            <div class="col-lg-12">
+              <label for="nombrecliente" class="form-control-label text-uppercase">Region</label><br>
+              <span>{{ticket?.region?.nombre}}</span>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-lg-4">
+              <label for="nombrecliente" class="form-control-label text-uppercase">Name</label><br>
+              <span>{{ticket?.nombreCliente}}</span>
+            </div>
+            <div class="col-lg-4">
+              <label for="apellidocliente" class="form-control-label text-uppercase">Last Name</label><br>
+              <span>{{ticket?.apellidoCliente}}</span>
+            </div>
+            <div class="col-lg-4">
+              <label for="emailcliente" class="form-control-label text-uppercase">Email</label><br>
+              <span>{{ticket?.emailCliente}}</span>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-lg-12">
+              <label for="asunto" class="form-control-label text-uppercase">Subject</label><br>
+              <span>{{ticket?.asunto}}</span>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+
+      <div class="form-group row">
+        <fieldset class="col-12 col-lg-12 px3">
+          <legend>Motorcycle data</legend>
+          <div class="form-group row">
+            <div class="col-lg-4">
+              <label for="numeropi" class="form-control-label text-uppercase">PI Number / Order Number</label><br>
+              <span>{{ticket?.numeroPi}}</span>
+            </div>
+            <div class="col-lg-4">
+              <label for="modelo" class="form-control-label text-uppercase">Model Name / Motorcycle
+                reference</label><br>
+              <span>{{ticket?.modelo?.nombre}}</span>
+            </div>
+            <div class="col-lg-4">
+              <label for="ccmotor" class="form-control-label text-uppercase">Engine C.C</label><br>
+              <span>{{ticket?.motorCC}}</span>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+
+      <div class="form-group row">
+        <fieldset class="col-12 col-lg-12 px3">
+          <legend>Failure data</legend>
+          <div class="form-group row">
+            <div class="col-lg-12">
+              <label for="tipofalla" class="form-control-label text-uppercase">Failure Type</label><br>
+              <span>{{ticket?.fallo?.nombre}}</span>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-lg-12">
+              <label for="descripcionfalla" class="form-control-label text-uppercase">Failure Description</label><br>
+              <span>{{ticket?.descripcionFalla}}</span>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-lg-12">
+              <label for="solucionfalla" class="form-control-label text-uppercase">If you find a solution comment
+                us</label><br>
+              <span>{{ticket?.posibleSolucion}}</span>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+
+      <div class="form-group row">
+        <fieldset class="col-12 col-lg-12 px3">
+          <legend>
+            Parts
+          </legend>
+          <div class="parte" *ngFor="let parte of partes">
+          </div>
+          <table class="table-striped table-xl table-responsive-xl tabla-ver-solicitudes">
+            <caption></caption>
+            <thead class="thead-tickets">
+              <tr>
+                <td>Code</td>
+                <td>Quantity</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let parte of partes">
+                <th id="codigo">{{parte.codigo}}</th>
+                <th id="cantidad">{{parte.cantidad}}</th>
+              </tr>
+            </tbody>
+          </table>
+        </fieldset>
+      </div>
+
+      <div class="form-group row">
+        <fieldset class="col-12 col-lg-12 px3">
+          <legend>
+            VIN
+          </legend>
+          <br>
+          <div class="vins-box">
+            <table class="table-striped table-xl table-responsive-xl tabla-ver-solicitudes">
+              <caption></caption>
+              <thead class="thead-tickets">
+                <tr>
+                  <td>VIN</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let vin of vins">
+                  <th id="vin">{{vin.nombre}}</th>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </fieldset>
+      </div>
+
+      <div class="form-group row">
+        <fieldset class="col-12 col-lg-12 px3">
+          <legend>Attached Pictures</legend>
+          <div class="form-group row">
+            <div class="col-lg-3" *ngFor="let imagen of ticket?.imagenes">
+              <a download="{{ imagen }}" href="{{ imagen }}">
+                <img alt="" width="110" height="110" class="img-rounded img-responsive hidden-xs" src="{{ imagen }}" />
+              </a>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+
+      <div class="form-group row" *ngIf="ticket?.documentosCreacionTicket.length > 0">
+        <fieldset class="col-12 col-lg-12 px3">
+          <legend>Attached Files</legend>
+          <ng-container *ngFor="let documento of ticket?.documentosCreacionTicket">
+            <div class="form-group row">
+              <div class="col-lg-6">
+                <label for="documento" class="form-control-label text-uppercase">{{documento.nombre}}</label><br>
+                <a href="{{documento.url}}" download tooltip="{{documento.nombre}}">
+                  <img src="/assets/images/document.png" alt="document">
+                </a>
+              </div>
+            </div>
+          </ng-container>
+        </fieldset>
+      </div>
+      <div class="line"></div>
+    </div>
+  </div>
+</div>
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+  <p style="font-size: 20px; color: white">Processing...</p>
+</ngx-spinner>
