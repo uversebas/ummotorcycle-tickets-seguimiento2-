@@ -27,30 +27,20 @@ export class TicketService {
       'Author/Title',
       'Author/ID',
       'Author/EMail',
-      'Attachments',
-      'AttachmentFiles',
-      'FailureType/Title',
-      'FailureType/ID',
-      'Model/Title',
-      'Model/ID',
-      'Region/Title',
-      'Region/ID',
-      'Region/Url',
-      'Region/CustomerGroup',
-      'Region/AfterSalesGroup',
-      'Region/SupportGroup',
-      'AfterSalesResponsible/Title',
-      'AfterSalesResponsible/ID',
-      'AfterSalesResponsible/EMail',
-      'SupportResponsible/Title',
-      'SupportResponsible/ID',
-      'SupportResponsible/EMail',
-      'Factory/Title',
-      'Factory/ID',
-      'FailureCategory/Title',
-      'FailureCategory/ID'
+      'MarketingResponsable/Title',
+      'MarketingResponsable/ID',
+      'MarketingResponsable/EMail',
+      'SupportLogiscticResponsable/Title',
+      'SupportLogiscticResponsable/ID',
+      'SupportLogiscticResponsable/EMail',
+      'QualityAssuranceResponsable/Title',
+      'QualityAssuranceResponsable/ID',
+      'QualityAssuranceResponsable/EMail',
+      'AdministratorResponsable/Title',
+      'AdministratorResponsable/ID',
+      'AdministratorResponsable/EMail',
     ];
-    this.expands = ['Author', 'FailureType', 'Model', 'Region', 'AttachmentFiles', 'AfterSalesResponsible', 'SupportResponsible', 'Factory', 'FailureCategory'];
+    this.expands = ['Author', 'MarketingResponsable', 'SupportLogiscticResponsable', 'QualityAssuranceResponsable', 'AdministratorResponsable'];
   }
 
   public ObtenerTodos(): Observable<any[]> {
@@ -82,9 +72,54 @@ export class TicketService {
     return respuesta;
   }
 
+  public obtenerTicketsComercial(): Observable<any[]> {
+    const usuario: Usuario = JSON.parse(localStorage.getItem(Constantes.cookieUsuarioActual));
+    const filter = String.Format(`AuthorId eq {0}`, usuario.id)
+    const respuesta = from(
+      Constantes.getConfig(environment.web)
+        .web.lists.getByTitle(Constantes.listaTicket)
+        .items.select(this.selects.toString())
+        .expand(this.expands.toString())
+        .filter(filter)
+        .orderBy('ID', false)
+        .get()
+    );
+    return respuesta;
+  }
+
+  public obtenerTicketsCalidad(): Observable<any[]> {
+    const usuario: Usuario = JSON.parse(localStorage.getItem(Constantes.cookieUsuarioActual));
+    const filter = String.Format(`QualityAssuranceResponsableId eq {0}`, usuario.id)
+    const respuesta = from(
+      Constantes.getConfig(environment.web)
+        .web.lists.getByTitle(Constantes.listaTicket)
+        .items.select(this.selects.toString())
+        .expand(this.expands.toString())
+        .filter(filter)
+        .orderBy('ID', false)
+        .get()
+    );
+    return respuesta;
+  }
+
+  public obtenerTicketsMarketing(): Observable<any[]> {
+    const usuario: Usuario = JSON.parse(localStorage.getItem(Constantes.cookieUsuarioActual));
+    const filter = String.Format(`MarketingResponsableId eq {0}`, usuario.id)
+    const respuesta = from(
+      Constantes.getConfig(environment.web)
+        .web.lists.getByTitle(Constantes.listaTicket)
+        .items.select(this.selects.toString())
+        .expand(this.expands.toString())
+        .filter(filter)
+        .orderBy('ID', false)
+        .get()
+    );
+    return respuesta;
+  }
+
   public obtenerTicketsSoporte(): Observable<any[]> {
     const usuario: Usuario = JSON.parse(localStorage.getItem(Constantes.cookieUsuarioActual));
-    const filter = String.Format(`SupportResponsibleId eq {0} and (Status eq {1})`, usuario.id, `'${TicketStatus.ASSIGNEDTOSUPPORT}'`)
+    const filter = String.Format(`SupportLogiscticResponsableId eq {0} `, usuario.id)
     const respuesta = from(
       Constantes.getConfig(environment.web)
         .web.lists.getByTitle(Constantes.listaTicket)
@@ -99,7 +134,7 @@ export class TicketService {
 
   public obtenerTicketsPostVentas(): Observable<any[]> {
     const usuario: Usuario = JSON.parse(localStorage.getItem(Constantes.cookieUsuarioActual));
-    const filter = String.Format(`AfterSalesResponsibleId eq {0} and (Status eq {1} or Status eq {2} or Status eq {3})`, usuario.id, `'${TicketStatus.ASSIGNEDAFTERSALES}'`, `'${TicketStatus.SUPPLIERS}'`, `'${TicketStatus.WATINGFORCUSTOMER}'`)
+    const filter = String.Format(`AfterSalesResponsibleId eq {0} and (Status eq {1} or Status eq {2} or Status eq {3})`, usuario.id, `'${TicketStatus.ASSIGNED}'`, `'${TicketStatus.ASSIGNED}'`, `'${TicketStatus.ASSIGNED}'`)
     const respuesta = from(
       Constantes.getConfig(environment.web)
         .web.lists.getByTitle(Constantes.listaTicket)
@@ -140,19 +175,22 @@ export class TicketService {
     return Constantes.getConfig(environment.web)
       .web.lists.getByTitle(Constantes.listaTicket)
       .items.add({
-        CustomerName: ticket.nombreCliente,
-        CustomerLastName: ticket.apellidoCliente,
-        CustomerEmail: ticket.emailCliente,
-        Subject: ticket.asunto,
-        PINumber: ticket.numeroPi,
-        EngineCC: ticket.motorCC,
-        FailureDescription: ticket.descripcionFalla,
-        PossibleSolution: ticket.posibleSolucion,
-        FailureTypeId: ticket.fallo.id,
-        ModelId: ticket.modelo.id,
-        RegionId: ticket.region.id,
+        Title: ticket.orden,
+        Country: ticket.pais,
+        Date: ticket.fecha
+      });
+  }
+
+  public asignarResponsables(ticket: Ticket, usuarioActual: Usuario): Promise<IItemUpdateResult> {
+    return Constantes.getConfig(environment.web)
+      .web.lists.getByTitle(Constantes.listaTicket)
+      .items.getById(ticket.id)
+      .update({
         Status: ticket.estado,
-        Tracing: ticket.comentario.valor
+        MarketingResponsableId: ticket.usuarioMarketing.id,
+        SupportLogiscticResponsableId: ticket.usuarioSoporteLogistica.id,
+        QualityAssuranceResponsableId: ticket.usuarioCalidad.id,
+        AdministratorResponsableId: usuarioActual.id
       });
   }
 
@@ -168,6 +206,17 @@ export class TicketService {
       });
   }
 
+  public reEnviarTicket(
+    ticket: Ticket
+  ): Promise<IItemUpdateResult> {
+    return Constantes.getConfig(environment.web)
+      .web.lists.getByTitle(Constantes.listaTicket)
+      .items.getById(ticket.id)
+      .update({
+        Status: ticket.estado,
+      });
+  }
+
   public agregarComentario(
     ticketId: number,
     comentario: string
@@ -178,6 +227,281 @@ export class TicketService {
       .update({
         Tracing: comentario,
       });
+  }
+
+  public rechazoGeneral(
+    ticket: Ticket, comentario: string): Promise<IItemUpdateResult> {
+    return Constantes.getConfig(environment.web)
+    .web.lists.getByTitle(Constantes.listaTicket)
+    .items.getById(ticket.id)
+    .update({
+      Comments: comentario,
+      Status: ticket.estado
+    });
+  }
+
+  public rechazoManualUsuario(
+    ticket: Ticket, comentario: string): Promise<IItemUpdateResult> {
+    return Constantes.getConfig(environment.web)
+    .web.lists.getByTitle(Constantes.listaTicket)
+    .items.getById(ticket.id)
+    .update({
+      Comments: comentario,
+      UserManualsStatus: ticket.estadoManualUsuario
+    });
+  }
+
+  public rechazoVinList(
+    ticket: Ticket, comentario: string): Promise<IItemUpdateResult> {
+    return Constantes.getConfig(environment.web)
+    .web.lists.getByTitle(Constantes.listaTicket)
+    .items.getById(ticket.id)
+    .update({
+      Comments: comentario,
+      VinListStatus: ticket.estadoVinList
+    });
+  }
+
+  public rechazoVinDescription(
+    ticket: Ticket, comentario: string): Promise<IItemUpdateResult> {
+    return Constantes.getConfig(environment.web)
+    .web.lists.getByTitle(Constantes.listaTicket)
+    .items.getById(ticket.id)
+    .update({
+      Comments: comentario,
+      VinDescriptionStatus: ticket.estadoVinDescription
+    });
+  }
+
+  public rechazoSparePartsLabel(
+    ticket: Ticket, comentario: string): Promise<IItemUpdateResult> {
+    return Constantes.getConfig(environment.web)
+    .web.lists.getByTitle(Constantes.listaTicket)
+    .items.getById(ticket.id)
+    .update({
+      Comments: comentario,
+      SparePartsLabelingStatus: ticket.estadoSparePartsLabel
+    });
+  }
+
+  public rechazoReporteCalidad(
+    ticket: Ticket, comentario: string): Promise<IItemUpdateResult> {
+    return Constantes.getConfig(environment.web)
+    .web.lists.getByTitle(Constantes.listaTicket)
+    .items.getById(ticket.id)
+    .update({
+      Comments: comentario,
+      QualityReportStatus: ticket.estadoReporteCalidad
+    });
+  }
+
+  public rechazoDocumentoEmbarque(
+    ticket: Ticket, comentario: string): Promise<IItemUpdateResult> {
+    return Constantes.getConfig(environment.web)
+    .web.lists.getByTitle(Constantes.listaTicket)
+    .items.getById(ticket.id)
+    .update({
+      Comments: comentario,
+      ShippingDocumentsStatus: ticket.estadoDocumentoEmbarque
+    });
+  }
+
+  public rechazoManualPDI(
+    ticket: Ticket, comentario: string): Promise<IItemUpdateResult> {
+    return Constantes.getConfig(environment.web)
+    .web.lists.getByTitle(Constantes.listaTicket)
+    .items.getById(ticket.id)
+    .update({
+      Comments: comentario,
+      PDIManualsStatus: ticket.estadoManualPDI
+    });
+  }
+
+  public rechazoManualesServicio(
+    ticket: Ticket, comentario: string): Promise<IItemUpdateResult> {
+    return Constantes.getConfig(environment.web)
+    .web.lists.getByTitle(Constantes.listaTicket)
+    .items.getById(ticket.id)
+    .update({
+      Comments: comentario,
+      ServiceManualsStatus: ticket.estadoManualesServicio
+    });
+  }
+
+  public rechazoHomologacion(
+    ticket: Ticket, comentario: string): Promise<IItemUpdateResult> {
+    return Constantes.getConfig(environment.web)
+    .web.lists.getByTitle(Constantes.listaTicket)
+    .items.getById(ticket.id)
+    .update({
+      Comments: comentario,
+      HomologationStatus: ticket.estadoHomologacion
+    });
+  }
+
+  public rechazoManualTecnico(
+    ticket: Ticket, comentario: string): Promise<IItemUpdateResult> {
+    return Constantes.getConfig(environment.web)
+    .web.lists.getByTitle(Constantes.listaTicket)
+    .items.getById(ticket.id)
+    .update({
+      Comments: comentario,
+      DataSheetStatus: ticket.estadoManualTecnico
+    });
+  }
+
+  public rechazoFotografias(
+    ticket: Ticket, comentario: string): Promise<IItemUpdateResult> {
+    return Constantes.getConfig(environment.web)
+    .web.lists.getByTitle(Constantes.listaTicket)
+    .items.getById(ticket.id)
+    .update({
+      Comments: comentario,
+      PhotographsStatus: ticket.estadoFotografias
+    });
+  }
+
+  public rechazoLibroPartes(
+    ticket: Ticket, comentario: string): Promise<IItemUpdateResult> {
+    return Constantes.getConfig(environment.web)
+    .web.lists.getByTitle(Constantes.listaTicket)
+    .items.getById(ticket.id)
+    .update({
+      Comments: comentario,
+      PartsBookStatus: ticket.estadoLibroPartes
+    });
+  }
+
+  public enviarManualUsuario(
+    ticket: Ticket): Promise<IItemUpdateResult> {
+    return Constantes.getConfig(environment.web)
+    .web.lists.getByTitle(Constantes.listaTicket)
+    .items.getById(ticket.id)
+    .update({
+      UserManualsStatus: ticket.estadoManualUsuario,
+      Status: ticket.estado
+    });
+  }
+
+  public enviarVinList(
+    ticket: Ticket): Promise<IItemUpdateResult> {
+    return Constantes.getConfig(environment.web)
+    .web.lists.getByTitle(Constantes.listaTicket)
+    .items.getById(ticket.id)
+    .update({
+      VinListStatus: ticket.estadoVinList,
+      Status: ticket.estado
+    });
+  }
+
+  public enviarVinDescription(
+    ticket: Ticket): Promise<IItemUpdateResult> {
+    return Constantes.getConfig(environment.web)
+    .web.lists.getByTitle(Constantes.listaTicket)
+    .items.getById(ticket.id)
+    .update({
+      VinDescriptionStatus: ticket.estadoVinDescription,
+      Status: ticket.estado
+    });
+  }
+
+  public enviarSparePartsLabel(
+    ticket: Ticket): Promise<IItemUpdateResult> {
+    return Constantes.getConfig(environment.web)
+    .web.lists.getByTitle(Constantes.listaTicket)
+    .items.getById(ticket.id)
+    .update({
+      SparePartsLabelingStatus: ticket.estadoSparePartsLabel,
+      Status: ticket.estado
+    });
+  }
+
+  public enviarReporteCalidad(
+    ticket: Ticket): Promise<IItemUpdateResult> {
+    return Constantes.getConfig(environment.web)
+    .web.lists.getByTitle(Constantes.listaTicket)
+    .items.getById(ticket.id)
+    .update({
+      QualityReportStatus: ticket.estadoReporteCalidad,
+      Status: ticket.estado
+    });
+  }
+
+  public enviarDocumentoEmbarque(
+    ticket: Ticket): Promise<IItemUpdateResult> {
+    return Constantes.getConfig(environment.web)
+    .web.lists.getByTitle(Constantes.listaTicket)
+    .items.getById(ticket.id)
+    .update({
+      ShippingDocumentsStatus: ticket.estadoDocumentoEmbarque,
+      Status: ticket.estado
+    });
+  }
+
+  public enviarManualPDI(
+    ticket: Ticket): Promise<IItemUpdateResult> {
+    return Constantes.getConfig(environment.web)
+    .web.lists.getByTitle(Constantes.listaTicket)
+    .items.getById(ticket.id)
+    .update({
+      PDIManualsStatus: ticket.estadoManualPDI,
+      Status: ticket.estado
+    });
+  }
+
+  public enviarManualesServicio(
+    ticket: Ticket): Promise<IItemUpdateResult> {
+    return Constantes.getConfig(environment.web)
+    .web.lists.getByTitle(Constantes.listaTicket)
+    .items.getById(ticket.id)
+    .update({
+      ServiceManualsStatus: ticket.estadoManualesServicio,
+      Status: ticket.estado
+    });
+  }
+
+  public enviarHomologacion(
+    ticket: Ticket): Promise<IItemUpdateResult> {
+    return Constantes.getConfig(environment.web)
+    .web.lists.getByTitle(Constantes.listaTicket)
+    .items.getById(ticket.id)
+    .update({
+      HomologationStatus: ticket.estadoHomologacion,
+      Status: ticket.estado
+    });
+  }
+
+  public enviarManualTecnico(
+    ticket: Ticket): Promise<IItemUpdateResult> {
+    return Constantes.getConfig(environment.web)
+    .web.lists.getByTitle(Constantes.listaTicket)
+    .items.getById(ticket.id)
+    .update({
+      DataSheetStatus: ticket.estadoManualTecnico,
+      Status: ticket.estado
+    });
+  }
+
+  public enviarFotografias(
+    ticket: Ticket): Promise<IItemUpdateResult> {
+    return Constantes.getConfig(environment.web)
+    .web.lists.getByTitle(Constantes.listaTicket)
+    .items.getById(ticket.id)
+    .update({
+      PhotographsStatus: ticket.estadoFotografias,
+      Status: ticket.estado
+    });
+  }
+
+  public enviarLibroPartes(
+    ticket: Ticket): Promise<IItemUpdateResult> {
+    return Constantes.getConfig(environment.web)
+    .web.lists.getByTitle(Constantes.listaTicket)
+    .items.getById(ticket.id)
+    .update({
+      PartsBookStatus: ticket.estadoLibroPartes,
+      Status: ticket.estado
+    });
   }
 
   public guardarAdjuntosCreacionTicket(ticketId: number, imagenes: File[], documentos: Documento[]): Promise<void> {
@@ -205,11 +529,7 @@ export class TicketService {
       .web.lists.getByTitle(Constantes.listaTicket)
       .items.getById(ticket.id)
       .update({
-        Status: ticket.estado,
-        Tracing: comentario,
-        TracingReviewApproval: comentario,
-        FactoryId: ticket.fabrica?.id,
-        FailureCategoryId: ticket.categoriaFalla?.id
+
       });
   }
 
@@ -251,10 +571,7 @@ export class TicketService {
       .web.lists.getByTitle(Constantes.listaTicket)
       .items.getById(ticket.id)
       .update({
-        Status: ticket.estado,
-        AfterSalesResponsibleId: ticket.usuarioPostVenta.id,
-        Tracing: ticket.comentario.valor,
-        AfterSalesAssignmentDate: new Date()
+
       });
   }
 
@@ -263,13 +580,7 @@ export class TicketService {
       .web.lists.getByTitle(Constantes.listaTicket)
       .items.getById(ticket.id)
       .update({
-        Status: ticket.estado,
-        SupportResponsibleId: ticket.usuarioSoporte.id,
-        Tracing: comentario,
-        TracingReviewApproval: comentario,
-        SupportAssignmentDate: new Date(),
-        FactoryId: ticket.fabrica?.id,
-        FailureCategoryId: ticket.categoriaFalla?.id
+
       });
   }
 
@@ -278,8 +589,7 @@ export class TicketService {
       .web.lists.getByTitle(Constantes.listaTicket)
       .items.getById(ticket.id)
       .update({
-        Status: ticket.estado,
-        Tracing: ticket.comentario.valor
+
       });
   }
 
@@ -291,10 +601,7 @@ export class TicketService {
       .web.lists.getByTitle(Constantes.listaTicket)
       .items.getById(ticket.id)
       .update({
-        Status: ticket.estado,
-        Tracing: comentario,
-        SolutionComment: comentario,
-        ResolveDate: new Date()
+
       });
   }
 

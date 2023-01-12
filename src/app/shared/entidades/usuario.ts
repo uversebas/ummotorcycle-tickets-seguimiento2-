@@ -1,15 +1,16 @@
 
 import { Constantes } from '../constantes';
-import { RegionSetting } from './regionSetting';
-import { RolUsuario } from './rolUsuario';
 
 export class Usuario {
   public nombre: string;
   public id?: number;
   public email?: string;
   public esAdministrador?: boolean;
+  public esComercial?: boolean;
+  public esMarketing?: boolean;
+  public esSoporteLogistica?: boolean;
+  public esCalidad?: boolean;
   public grupos: string[] = [];
-  public roles?: RolUsuario[] = [];
 
   constructor(
     nombre: string,
@@ -45,30 +46,11 @@ export class Usuario {
     elements.forEach((element: any) => {
       usuario.grupos.push(element.LoginName);
     });
-    if (usuario.grupos.includes(Constantes.grupoAdministrador)) {
-      usuario.esAdministrador = true;
-    }
+    usuario.esAdministrador = usuario.grupos.includes(Constantes.grupoAdministrador);
+    usuario.esComercial = usuario.grupos.includes(Constantes.grupoComercial);
+    usuario.esCalidad = usuario.grupos.includes(Constantes.grupoCalidad);
+    usuario.esSoporteLogistica = usuario.grupos.includes(Constantes.grupoSoporteLogistica);
+    usuario.esMarketing = usuario.grupos.includes(Constantes.grupoMarketing);
     usuario.grupos.sort((one, two) => (one > two ? -1 : 1));
-  }
-
-  public static asignacionRolesUsuario(
-    usuario: Usuario,
-    regiones: RegionSetting[]
-  ): void {
-    regiones.forEach((region) => {
-      const esCliente: boolean =
-        usuario.grupos.indexOf(region.grupoCliente) > -1;
-      const esPostVenta: boolean =
-        usuario.grupos.indexOf(region.grupoPostVenta) > -1;
-      const esSoporte: boolean =
-        usuario.grupos.indexOf(region.grupoSoporte) > -1;
-      const rolUsuario: RolUsuario = new RolUsuario(
-        region,
-        esCliente,
-        esPostVenta,
-        esSoporte
-      );
-      usuario.roles.push(rolUsuario);
-    });
   }
 }

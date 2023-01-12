@@ -43,8 +43,7 @@ export class SolicitudesSoporteComponent implements OnInit {
         ? JSON.parse(localStorage.getItem(Constantes.cookieUsuarioActual))
         : await this.servicioUsuario.ObtenerUsuario();
     const esAdministrador = this.usuarioActual.esAdministrador;
-    const esSoporte =
-      this.usuarioActual.roles.filter((r) => r.esSoporte === true).length > 0;
+    const esSoporte = false;
     return esAdministrador || esSoporte;
   }
 

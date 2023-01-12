@@ -1,271 +1,48 @@
 <div class="col-lg-12 mb-5">
   <div class="card">
     <div class="card-header">
-      <h3 class="h6 text-uppercase mb-0">Quality report tickets</h3>
+      <h3 class="h6 text-uppercase mb-0">Tracing ticket</h3>
     </div>
     <div class="card-body">
-      <p>Quality report ticket creation form</p>
+      <p>Tracing ticket creation form</p>
       <form *ngIf="formularioCreacionTicket" [formGroup]="formularioCreacionTicket" (ngSubmit)="onSubmitCrearTicket()">
         <div class="form-group row">
           <fieldset class="col-12 col-lg-12 px-3">
-            <legend>Customer data</legend>
-            <div class="form-group row">
-              <div class="col-lg-12">
-                <label for="region" class="form-control-label text-uppercase">Region</label>
-                <select id="region" name="region" formControlName="region" class="form-control"
-                  [(ngModel)]="regionSeleccionada" [ngClass]="{ 'is-invalid': submitted && f.region.errors }"
-                  tooltip="{{ayudasContextuales[14]?.textoAyuda}}" (change)="seleccionarRegion()">
-                  <option hidden value="null" disabled selected>
-                    Select region client
-                  </option>
-                  <option [ngValue]="region" *ngFor="let region of regionesCliente">
-                    {{ region.nombre }}
-                  </option>
-                </select>
-                <div *ngIf="submitted && f.region.errors" class="invalid-feedback">
-                  <div *ngIf="f.region.errors.required">
-                    This field is required
-                  </div>
-                </div>
-              </div>
-            </div>
+            <legend>Order information</legend>
             <div class="form-group row">
               <div class="col-lg-4">
-                <label for="nombrecliente" class="form-control-label text-uppercase">Name</label>
-                <input type="text" id="nombrecliente" name="nombrecliente" formControlName="nombrecliente"
+                <label for="orden" class="form-control-label text-uppercase">Order</label>
+                <input type="text" id="orden" name="orden" formControlName="orden"
                   class="form-control" [ngClass]="{
-                    'is-invalid': submitted && f.nombrecliente.errors
-                  }" tooltip="{{ayudasContextuales[0]?.textoAyuda}}" maxlength="255" />
-                <div *ngIf="submitted && f.nombrecliente.errors" class="invalid-feedback">
-                  <div *ngIf="f.nombrecliente.errors.required">
+                    'is-invalid': submitted && f.orden.errors
+                  }" maxlength="255" />
+                <div *ngIf="submitted && f.orden.errors" class="invalid-feedback">
+                  <div *ngIf="f.orden.errors.required">
                     This field is required
                   </div>
                 </div>
               </div>
               <div class="col-lg-4">
-                <label for="apellidocliente" class="form-control-label text-uppercase">Last Name</label>
-                <input type="text" id="apellidocliente" name="apellidocliente" formControlName="apellidocliente"
+                <label for="pais" class="form-control-label text-uppercase">Country</label>
+                <input type="text" id="pais" name="pais" formControlName="pais"
                   class="form-control" [ngClass]="{
-                    'is-invalid': submitted && f.apellidocliente.errors
-                  }" tooltip="{{ayudasContextuales[1]?.textoAyuda}}" maxlength="255" />
-                <div *ngIf="submitted && f.apellidocliente.errors" class="invalid-feedback">
-                  <div *ngIf="f.apellidocliente.errors.required">
+                    'is-invalid': submitted && f.pais.errors
+                  }" maxlength="255" />
+                <div *ngIf="submitted && f.pais.errors" class="invalid-feedback">
+                  <div *ngIf="f.pais.errors.required">
                     This field is required
                   </div>
                 </div>
               </div>
               <div class="col-lg-4">
-                <label for="emailcliente" class="form-control-label text-uppercase">Email</label>
-                <input type="text" id="emailcliente" name="emailcliente" formControlName="emailcliente"
-                  class="form-control" [ngClass]="{
-                    'is-invalid': submitted && f.emailcliente.errors
-                  }" tooltip="{{ayudasContextuales[2]?.textoAyuda}}" maxlength="255" />
-                <div *ngIf="submitted && f.emailcliente.errors" class="invalid-feedback">
-                  <div *ngIf="f.emailcliente.errors.required">
-                    This field is required
-                  </div>
-                  <div *ngIf="f.emailcliente.errors.email">Invalid email</div>
+                <label for="fecha" class="form-control-label text-uppercase">Date</label>
+                <input placeholder="dd/mm/aaaa" formControlName="fecha" id="fecha" name="fecha"
+                  type="text" autocomplete="off" class="form-control fecha-solicitud" #dp="bsDatepicker"
+                  [bsConfig]="calendarioConfiguracion" bsDatepicker
+                  [ngClass]="{ 'is-invalid': submitted && f.fecha.errors }" />
+                <div *ngIf="submitted && f.fecha.errors" class="invalid-feedback">
+                  <div *ngIf="f.fecha.errors.required">This field is required</div>
                 </div>
-              </div>
-            </div>
-
-            <div class="form-group row">
-              <div class="col-lg-12">
-                <label for="asunto" class="form-control-label text-uppercase">Subject</label>
-                <input type="text" id="asunto" name="asunto" formControlName="asunto" class="form-control"
-                  [ngClass]="{ 'is-invalid': submitted && f.asunto.errors }"
-                  tooltip="{{ayudasContextuales[3]?.textoAyuda}}" maxlength="255" />
-                <div *ngIf="submitted && f.asunto.errors" class="invalid-feedback">
-                  <div *ngIf="f.asunto.errors.required">
-                    This field is required
-                  </div>
-                </div>
-              </div>
-            </div>
-          </fieldset>
-        </div>
-
-        <div class="form-group row">
-          <fieldset class="col-12 col-lg-12 px3">
-            <legend>Motorcycle data</legend>
-            <div class="form-group row">
-              <div class="col-lg-4">
-                <label for="numeropi" class="form-control-label text-uppercase">PI Number / Order Number</label>
-                <input type="text" id="numeropi" name="numeropi" formControlName="numeropi" class="form-control"
-                  [ngClass]="{ 'is-invalid': submitted && f.numeropi.errors }"
-                  tooltip="{{ayudasContextuales[4]?.textoAyuda}}" maxlength="255" />
-                <div *ngIf="submitted && f.numeropi.errors" class="invalid-feedback">
-                  <div *ngIf="f.numeropi.errors.required">
-                    This field is required
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-4">
-                <label for="modelo" class="form-control-label text-uppercase">Model Name / Motorcycle reference</label>
-                <select id="modelo" name="modelo" formControlName="modelo" class="form-control"
-                  [(ngModel)]="modeloSeleccionado" [ngClass]="{ 'is-invalid': submitted && f.modelo.errors }"
-                  tooltip="{{ayudasContextuales[5]?.textoAyuda}}" (change)="seleccionarModelo()">
-                  <option hidden value="null" disabled selected>
-                    Select model name
-                  </option>
-                  <option [ngValue]="modelo" *ngFor="let modelo of modelos">
-                    {{ modelo.nombre }}
-                  </option>
-                </select>
-                <div *ngIf="submitted && f.modelo.errors" class="invalid-feedback">
-                  <div *ngIf="f.modelo.errors.required">
-                    This field is required
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-4">
-                <label for="ccmotor" class="form-control-label text-uppercase">Engine C.C</label>
-                <select id="ccmotor" name="ccmotor" formControlName="ccmotor" class="form-control"
-                  [(ngModel)]="motorSeleccionado" [ngClass]="{ 'is-invalid': submitted && f.ccmotor.errors }"
-                  tooltip="{{ayudasContextuales[6]?.textoAyuda}}">
-                  <option hidden value="null" disabled selected>
-                    Select Engine cc
-                  </option>
-                  <option [ngValue]="motor" *ngFor="let motor of motores">
-                    {{ motor.nombre }}
-                  </option>
-                </select>
-                <div *ngIf="submitted && f.ccmotor.errors" class="invalid-feedback">
-                  <div *ngIf="f.ccmotor.errors.required">
-                    This field is required
-                  </div>
-                </div>
-              </div>
-            </div>
-          </fieldset>
-        </div>
-
-        <div class="form-group row">
-          <fieldset class="col-12 col-lg-12 px3">
-            <legend>Failure data</legend>
-            <div class="form-group row">
-              <div class="col-lg-12">
-                <label for="tipofalla" class="form-control-label text-uppercase">Failure Type</label>
-                <select id="tipofalla" name="tipofalla" formControlName="tipofalla" class="form-control"
-                  [(ngModel)]="fallaSeleccionada" [ngClass]="{ 'is-invalid': submitted && f.tipofalla.errors }"
-                  tooltip="{{ayudasContextuales[7]?.textoAyuda}}">
-                  <option hidden value="null" disabled selected>
-                    Select Failure
-                  </option>
-                  <option [ngValue]="falla" *ngFor="let falla of fallas">
-                    {{ falla.nombre }}
-                  </option>
-                </select>
-                <div *ngIf="submitted && f.tipofalla.errors" class="invalid-feedback">
-                  <div *ngIf="f.tipofalla.errors.required">
-                    This field is required
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="form-group row">
-              <div class="col-lg-12">
-                <label for="descripcionfalla" class="form-control-label text-uppercase">Failure Description</label>
-                <textarea autosize name="descripcionfalla" id="descripcionfalla" formControlName="descripcionfalla"
-                  class="form-control" rows="3" placeholder="Please write the description of the failure..."
-                  style="resize: none" [ngClass]="{
-                    'is-invalid': submitted && f.descripcionfalla.errors
-                  }" tooltip="{{ayudasContextuales[8]?.textoAyuda}}"></textarea>
-                <div *ngIf="submitted && f.descripcionfalla.errors" class="invalid-feedback">
-                  <div *ngIf="f.descripcionfalla.errors.required">
-                    This field is required
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="form-group row">
-              <div class="col-lg-12">
-                <label for="solucionfalla" class="form-control-label text-uppercase">If you find a solution comment
-                  us</label>
-                <textarea autosize name="solucionfalla" id="solucionfalla" formControlName="solucionfalla"
-                  class="form-control" rows="3" placeholder="Please write if you found a solution to the failure..."
-                  style="resize: none" [ngClass]="{
-                    'is-invalid': submitted && f.solucionfalla.errors
-                  }" tooltip="{{ayudasContextuales[9]?.textoAyuda}}"></textarea>
-                <div *ngIf="submitted && f.solucionfalla.errors" class="invalid-feedback">
-                  <div *ngIf="f.solucionfalla.errors.required">
-                    This field is required
-                  </div>
-                </div>
-              </div>
-            </div>
-          </fieldset>
-        </div>
-
-        <div class="form-group row">
-          <fieldset class="col-12 col-lg-12 px3">
-            <legend>
-              Parts
-              <span class="fas fa-plus-circle" (click)="agregarParte()"
-                tooltip="{{ayudasContextuales[15]?.textoAyuda}}"></span>
-            </legend>
-            <div *ngIf="ayudasContextuales.length > 0">
-              <div class="parte" *ngFor="let parte of partes">
-                <app-parte [parte]="parte" [submitted]="submitted" [cantidadPartes]="partes.length"
-                  [ayudasContextuales]="ayudasContextuales" (formReady)="agregarControlParte($event)"
-                  (borrar)="borrarParte($event)"></app-parte>
-              </div>
-            </div>
-          </fieldset>
-        </div>
-
-        <div class="form-group row">
-          <fieldset class="col-12 col-lg-12 px3">
-            <legend>
-              VIN
-              <span class="fas fa-plus-circle" (click)="agregarVin()"
-                tooltip="{{ayudasContextuales[16]?.textoAyuda}}"></span>
-              <ng-template #popTemplate>{{ayudasContextuales[17]?.textoAyuda}}<div class="imagen-vins"
-                  [innerHtml]="html"></div>
-              </ng-template>
-              <label class="fas fa-file-excel icono-excel" [tooltip]="popTemplate">
-                <input type="file" style="display: none" accept=".xls, .xlsx" #excel (change)="subirExcel(excel)" />
-              </label>
-            </legend>
-            <div class="vins-erros" *ngIf="vinsErradosExcel.length > 0">
-              <h3>The following vin codes have errors or were not found.</h3>
-              <ul>
-                <li *ngFor="let vin of vinsErradosExcel">{{vin.nombre}}</li>
-              </ul>
-            </div>
-            <br>
-            <div *ngIf="ayudasContextuales.length > 0" class="vins-box">
-              <div class="vin" *ngFor="let vin of vins">
-                <app-vin [vin]="vin" [vinMaestros]="vinMaestros" [submitted]="submitted" [cantidadVines]="vins.length"
-                  [ayudasContextuales]="ayudasContextuales" (formReady)="agregarControlVin($event)"
-                  (borrar)="borrarVin($event)"></app-vin>
-              </div>
-            </div>
-          </fieldset>
-        </div>
-
-        <div class="form-group row">
-          <fieldset class="col-12 col-lg-12 px3">
-            <legend>Attached Pictures</legend>
-            <div class="form-group row">
-              <div class="col-lg-12" tooltip="{{ayudasContextuales[13]?.textoAyuda}}">
-                <p>Attach at least three images</p>
-                <label class="btn btn-primary btn-file btn-block">
-                  Upload images<input type="file" style="display: none" accept="image/*"
-                    (change)="cambiarImagenes(inputSignatureImage)" #inputSignatureImage multiple />
-                </label>
-                <button *ngIf="imagenes.length > 0" class="btn btn-primary limpiar btn-block"
-                  (click)="resetImagenes(inputSignatureImage)">
-                  Clear images
-                </button>
-              </div>
-            </div>
-            <div class="form-group row">
-              <div class="col-lg-3" *ngFor="let imagen of imagenes">
-                <img alt="" width="110" height="110" class="img-rounded img-responsive hidden-xs" src="{{ imagen }}" />
-              </div>
-              <div *ngIf="submitted && imagenes.length < 3">
-                <div class="invalid-images">You must upload at least three images</div>
               </div>
             </div>
           </fieldset>
@@ -274,20 +51,29 @@
         <div class="form-group row">
           <fieldset class="col-12 col-lg">
             <legend>Attach documents</legend>
-            <p>Attch only Pdf or Excel files</p>
+            <p>Attch Pdf, Excel or Image files</p>
             <div class="form-group row">
               <div class="col-lg-12">
                 <label for="adjuntoCliente" class="btn btn-primary btn-file btn-block">Upload documents<input type="file"
                   id="adjuntoCliente" name="adjuntoCliente" formControlName="adjuntoCliente"
                   (change)="subirAdjuntosCliente($event)" style="display: none"
-                  accept="application/pdf,.csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                  accept="application/pdf,.csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel, image/png, image/gif, image/jpeg"
                   multiple></label>
               </div>
             </div>
             <br>
             <div class="form-group row">
               <div class="col-lg-3" *ngFor="let documento of documentos">
+                <img src="{{obtenerIconoDocumento(documento)}}" alt="document">
                 <span>{{documento.nombre}}</span>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-lg-3" *ngFor="let imagen of imagenes">
+                <img alt="" width="110" height="110" class="img-rounded img-responsive hidden-xs" src="{{ imagen }}" />
+              </div>
+              <div *ngIf="submitted && (imagenes.length === 0 || documentos.length === 0)">
+                <div class="invalid-images">You must upload at least one attachment</div>
               </div>
             </div>
           </fieldset>

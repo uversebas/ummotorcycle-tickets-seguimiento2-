@@ -1,4 +1,3 @@
-import { RegionSetting } from './shared/entidades/regionSetting';
 import { Component, OnInit } from '@angular/core';
 import { Constantes } from './shared/constantes';
 import { Usuario } from './shared/entidades';
@@ -11,13 +10,8 @@ declare var $: any;
 })
 export class AppComponent implements OnInit {
   public title = 'ummotorcycles-tickets-calidad';
-  public regiones: RegionSetting[] = [];
   public usuarioActual: Usuario;
   public nombreUsuario: string;
-  public esAdministrador: boolean = false;
-  public esCliente: boolean = false;
-  public esPostVenta: boolean = false;
-  public esSoporte: boolean = false;
 
   constructor(private servicioUsuario: UsuarioService) {}
 
@@ -33,17 +27,6 @@ export class AppComponent implements OnInit {
       localStorage.getItem(Constantes.cookieUsuarioActual)
     );
     this.nombreUsuario = this.usuarioActual.nombre;
-    this.rolesMenu();
-  }
-
-  private rolesMenu(): void {
-    this.esAdministrador = this.usuarioActual.esAdministrador;
-    this.esCliente =
-      this.usuarioActual.roles.filter((r) => r.esCliente === true).length > 0;
-    this.esPostVenta =
-      this.usuarioActual.roles.filter((r) => r.esPostVenta === true).length > 0;
-    this.esSoporte =
-      this.usuarioActual.roles.filter((r) => r.esSoporte === true).length > 0;
   }
 
   private abrirCerrarMenuDesktop(): void {

@@ -1,5 +1,3 @@
-import { RegionSetting } from './../entidades/regionSetting';
-import { RegionSettingService } from './region-setting.service';
 import { environment } from 'src/environments/environment';
 import { Injectable } from '@angular/core';
 import { ISiteGroupInfo } from '@pnp/sp/site-groups';
@@ -12,9 +10,8 @@ import { Usuario } from '../entidades';
   providedIn: 'root',
 })
 export class UsuarioService {
-  public regiones: RegionSetting[] = [];
 
-  constructor(private servicioRegiones: RegionSettingService) {}
+  constructor() {}
 
   public async ObtenerUsuarioActual(): Promise<any> {
     return await from(
@@ -75,10 +72,8 @@ export class UsuarioService {
   } 
 
   private async asignacionRolesUsuario(usuarioActual: Usuario): Promise<void> {
-    this.regiones = await this.servicioRegiones.obtenerTodos();
     const grupos = await this.ObtenerGruposPorUsuario(usuarioActual);
     Usuario.asignarGrupo(grupos, usuarioActual);
-    Usuario.asignacionRolesUsuario(usuarioActual, this.regiones);
   }
 
   private GuardarUsuarioLocalStorage(usuarioActual: Usuario): void {

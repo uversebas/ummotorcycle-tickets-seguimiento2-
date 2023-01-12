@@ -1,38 +1,9 @@
-<fieldset *ngIf="esAdministrador || esPostVenta || esSoporte" class="border p-2">
-    <legend class="w-auto">Administration</legend>
-    <div class="botonera-home">
-        <button *ngIf="esAdministrador" class="button-home" routerLink="/quality-tickets/all-requests" routerLinkActive="active"><span>All Requests</span></button>
-        <button *ngIf="esAdministrador || esPostVenta || esSoporte" class="button-home" routerLink="/quality-tickets/summary-of-requests" routerLinkActive="active"><span>Summary of requests</span></button>
-    </div>
-</fieldset>
+<app-administrador-tickets *ngIf="usuarioActual?.esAdministrador"></app-administrador-tickets>
+<app-comercial-tickets *ngIf="usuarioActual?.esComercial"></app-comercial-tickets>
+<app-quality-tickets *ngIf="usuarioActual?.esCalidad"></app-quality-tickets>
+<app-solicitudes-marketing *ngIf="usuarioActual?.esMarketing"></app-solicitudes-marketing>
+<app-support-tickets *ngIf="usuarioActual?.esSoporteLogistica"></app-support-tickets>
 
-<br/>
-
-<fieldset *ngIf="esAdministrador || esCliente" class="border p-2">
-    <legend class="w-auto">Customer</legend>
-    <div class="botonera-home">
-        <button class="button-home" routerLink="/quality-tickets/create-request" routerLinkActive="active"><span>Create request</span></button>
-        <button class="button-home" routerLink="/quality-tickets/my-requests" routerLinkActive="active"><span>My Requests</span></button>
-    </div>
-</fieldset>
-
-<br/>
-
-<fieldset *ngIf="esAdministrador || esPostVenta" class="border p-2">
-    <legend class="w-auto">After Sales</legend>
-    <div class="botonera-home">
-        <button class="button-home" routerLink="/quality-tickets/after-sales-requests" routerLinkActive="active"><span>After sales requests</span></button>
-    </div>
-</fieldset>
-
-<br/>
-
-<fieldset *ngIf="esAdministrador || esSoporte" class="border p-2">
-    <legend class="w-auto">Support</legend>
-    <div class="botonera-home">
-        <button class="button-home" routerLink="/quality-tickets/support-requests" routerLinkActive="active"><span>Support requests</span></button>
-    </div>
-</fieldset>
 <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
     <p style="font-size: 20px; color: white">Processing...</p>
   </ngx-spinner>

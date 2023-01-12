@@ -10,8 +10,7 @@ import { environment } from 'src/environments/environment';
 export class ComentarioService {
   selects: string[] = [
     'Editor',
-    'Tracing',
-    'TracingReviewApproval',
+    'Comments',
     'OData__x005f_UIVersionString',
     'Created',
     'Status',
@@ -36,9 +35,9 @@ export class ComentarioService {
             fechaCreacionComentario.setHours(
               fechaCreacionComentario.getHours() - 5
             );
-            if (elemento.Tracing) {
+            if (elemento.Comments) {
               comentarios.push({
-                valor: elemento.Tracing,
+                valor: elemento.Comments,
                 version: elemento.OData__x005f_UIVersionString,
                 fechaCreacion: fechaCreacionComentario,
                 autor: elemento.Editor.LookupValue,

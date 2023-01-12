@@ -1,13 +1,14 @@
+<div class="row">
+  <div class="col-lg-12 zona-botones">
+    <span class="round" (click)="mostrarBitacora()"><img src="/assets/images/icon-image.png" alt="user"
+        width="50"></span>
+  </div>
+</div>
 <div class="col-lg-12 mb-5">
   <div class="card">
     <div class="card-header">
-      <h3 class="h6 text-uppercase mb-0">Quality report tickets</h3>
+      <h3 class="h6 text-uppercase mb-0">Tracing ticket</h3>
     </div>
-    <ng-container *ngIf="mostrarSolucionCliente">
-      <br>
-      <app-ver-solucion-cliente  [ticket]="ticket"></app-ver-solucion-cliente>
-      <br>
-    </ng-container>
     <div class="progress">
       <div class="progress-bar" role="progressbar" attr.aria-valuenow="{{avance}}" aria-valuemin="0" aria-valuemax="100"
         [style.width.%]="avance">
@@ -15,161 +16,119 @@
       </div>
     </div>
     <div class="card-body">
-      <div class="form-group row">
+      <div class="row">
         <fieldset class="col-12 col-lg-12 px-3">
-          <legend>Customer data</legend>
-          <div class="form-group row">
-            <div class="col-lg-12">
-              <label for="nombrecliente" class="form-control-label text-uppercase">Region</label><br>
-              <span>{{ticket?.region?.nombre}}</span>
-            </div>
-          </div>
-          <div class="form-group row">
+          <legend>Order information</legend>
+          <div class="row">
             <div class="col-lg-4">
-              <label for="nombrecliente" class="form-control-label text-uppercase">Name</label><br>
-              <span>{{ticket?.nombreCliente}}</span>
+              <label for="orden" class="form-control-label text-uppercase">Order</label><br>
+              <span>{{ticket?.orden}}</span>
             </div>
             <div class="col-lg-4">
-              <label for="apellidocliente" class="form-control-label text-uppercase">Last Name</label><br>
-              <span>{{ticket?.apellidoCliente}}</span>
+              <label for="pais" class="form-control-label text-uppercase">Country</label><br>
+              <span>{{ticket?.pais}}</span>
             </div>
             <div class="col-lg-4">
-              <label for="emailcliente" class="form-control-label text-uppercase">Email</label><br>
-              <span>{{ticket?.emailCliente}}</span>
-            </div>
-          </div>
-
-          <div class="form-group row">
-            <div class="col-lg-12">
-              <label for="asunto" class="form-control-label text-uppercase">Subject</label><br>
-              <span>{{ticket?.asunto}}</span>
+              <label for="fecha" class="form-control-label text-uppercase">Date</label><br>
+              <span>{{ticket?.fecha}}</span>
             </div>
           </div>
         </fieldset>
       </div>
+      <br>
+      <div *ngIf="mostrarDocumentosIniciales">
+        <div class="row" *ngIf="documentosCargadosIniciales.length > 0">
+          <fieldset class="col-12 col-lg">
+            <legend>Attached Files {{actividad.actividad}}</legend>
+            <ng-container>
+              <div class="row">
+                <div class="col-lg-3" *ngFor="let documentoCargadoInicial of documentosCargadosIniciales">
+                  <a href="{{documentoCargadoInicial.documento.url}}" download
+                    tooltip="{{documentoCargadoInicial.documento.nombre}}">
+                    <img src="{{obtenerIconoDocumentoPorNombreIniciales(documentoCargadoInicial.documento.nombre)}}"
+                      alt="document">
+                    <span>{{documentoCargadoInicial.documento.nombre}}</span>
+                  </a>
+                  <span *ngIf="mostrarEdicionDocumentosIniciales" class="fas fa-trash" style="margin:6px; cursor: pointer;" (click)="borrarDocumento(documentoCargadoInicial)"></span>
+                </div>
+              </div>
+            </ng-container>
+          </fieldset>
+        </div>
 
-      <div class="form-group row">
-        <fieldset class="col-12 col-lg-12 px3">
-          <legend>Motorcycle data</legend>
-          <div class="form-group row">
-            <div class="col-lg-4">
-              <label for="numeropi" class="form-control-label text-uppercase">PI Number / Order Number</label><br>
-              <span>{{ticket?.numeroPi}}</span>
-            </div>
-            <div class="col-lg-4">
-              <label for="modelo" class="form-control-label text-uppercase">Model Name / Motorcycle
-                reference</label><br>
-              <span>{{ticket?.modelo?.nombre}}</span>
-            </div>
-            <div class="col-lg-4">
-              <label for="ccmotor" class="form-control-label text-uppercase">Engine C.C</label><br>
-              <span>{{ticket?.motorCC}}</span>
-            </div>
-          </div>
-        </fieldset>
-      </div>
-
-      <div class="form-group row">
-        <fieldset class="col-12 col-lg-12 px3">
-          <legend>Failure data</legend>
-          <div class="form-group row">
-            <div class="col-lg-12">
-              <label for="tipofalla" class="form-control-label text-uppercase">Failure Type</label><br>
-              <span>{{ticket?.fallo?.nombre}}</span>
-            </div>
-          </div>
-          <div class="form-group row">
-            <div class="col-lg-12">
-              <label for="descripcionfalla" class="form-control-label text-uppercase">Failure Description</label><br>
-              <span>{{ticket?.descripcionFalla}}</span>
-            </div>
-          </div>
-          <div class="form-group row">
-            <div class="col-lg-12">
-              <label for="solucionfalla" class="form-control-label text-uppercase">If you find a solution comment
-                us</label><br>
-              <span>{{ticket?.posibleSolucion}}</span>
-            </div>
-          </div>
-        </fieldset>
-      </div>
-
-      <div class="form-group row">
-        <fieldset class="col-12 col-lg-12 px3">
-          <legend>
-            Parts
-          </legend>
-          <div class="parte" *ngFor="let parte of partes">
-          </div>
-          <table class="table-striped table-xl table-responsive-xl tabla-ver-solicitudes">
-            <caption></caption>
-            <thead class="thead-tickets">
-              <tr>
-                <td>Code</td>
-                <td>Quantity</td>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let parte of partes">
-                <th id="codigo">{{parte.codigo}}</th>
-                <th id="cantidad">{{parte.cantidad}}</th>
-              </tr>
-            </tbody>
-          </table>
-        </fieldset>
-      </div>
-
-      <div class="form-group row">
-        <fieldset class="col-12 col-lg-12 px3">
-          <legend>
-            VIN
-          </legend>
-          <br>
-          <div class="vins-box">
-            <table class="table-striped table-xl table-responsive-xl tabla-ver-solicitudes">
-              <caption></caption>
-              <thead class="thead-tickets">
-                <tr>
-                  <td>VIN</td>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let vin of vins">
-                  <th id="vin">{{vin.nombre}}</th>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </fieldset>
-      </div>
-
-      <div class="form-group row">
-        <fieldset class="col-12 col-lg-12 px3">
-          <legend>Attached Pictures</legend>
-          <div class="form-group row">
-            <div class="col-lg-3" *ngFor="let imagen of ticket?.imagenes">
-              <a download="{{ imagen }}" href="{{ imagen }}">
-                <img alt="" width="110" height="110" class="img-rounded img-responsive hidden-xs" src="{{ imagen }}" />
-              </a>
-            </div>
-          </div>
-        </fieldset>
-      </div>
-
-      <div class="form-group row" *ngIf="ticket?.documentosCreacionTicket.length > 0">
-        <fieldset class="col-12 col-lg-12 px3">
-          <legend>Attached Files</legend>
-          <ng-container *ngFor="let documento of ticket?.documentosCreacionTicket">
-            <div class="form-group row">
-              <div class="col-lg-6">
-                <label for="documento" class="form-control-label text-uppercase">{{documento.nombre}}</label><br>
-                <a href="{{documento.url}}" download tooltip="{{documento.nombre}}">
-                  <img src="/assets/images/document.png" alt="document">
-                </a>
+        <div class="row" *ngIf="mostrarEdicionDocumentosIniciales">
+          <fieldset class="col-12 col-lg">
+            <legend>Attach documents {{actividad.actividad}}</legend>
+            <p>Attch Pdf, Excel or Image files</p>
+            <div class="row">
+              <div class="col-lg-12">
+                <label for="adjuntoCliente" class="btn btn-primary btn-file btn-block">Upload documents<input
+                    type="file" id="adjuntoCliente" name="adjuntoCliente" formControlName="adjuntoCliente"
+                    (change)="subirAdjuntosClienteIniciales($event)" style="display: none"
+                    accept="application/pdf,.csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel, image/png, image/gif, image/jpeg"
+                    multiple></label>
               </div>
             </div>
-          </ng-container>
+            <br>
+            <div class="row">
+              <div class="col-lg-3" *ngFor="let documentoInicial of documentosIniciales">
+                <img src="{{obtenerIconoDocumentoIniciales(documentoInicial)}}" alt="document">
+                <span>{{documentoInicial.nombre}}</span>
+              </div>
+            </div>
+            <div class="line"></div>
+            <div class="col-lg-12 zona-botones">
+              <button class="btn btn-success um-success botonera" (click)="reenviarTicket()">
+                Send
+              </button>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+
+      <div class="row" *ngIf="mostrarAsignacionResponsables">
+        <fieldset class="col-12 col-lg-12 px3">
+          <legend>Assign Responsables</legend>
+          <app-assing-responsable [ticket]="ticket" [usuarioActual]="usuarioActual"
+            [emailsTemplate]="emailsTemplate"></app-assing-responsable>
         </fieldset>
+      </div>
+
+<br>
+      <div class="zona-documentos row" *ngIf="mostrarZonaDocumentos">
+        <div class="line"></div>
+        <fieldset class="col-12 col-lg-12 px3">
+          <legend>My activities</legend>
+          <accordion [isAnimated]="true" [closeOthers]="false" style="margin-top:5px;">
+            <accordion-group [isOpen]="open" *ngFor="let actividad of misActividades; let i = index;" #groupval
+              class="{{obtenerEstadoTab(actividad)}}" style="margin-top:5px;">
+              <div accordion-heading style="width:100%;">
+                {{actividad.actividad}}
+                <i class="pull-right float-xs-right glyphicon"
+                  [ngClass]="{'glyphicon-chevron-down': groupval?.isOpen, 'glyphicon-chevron-up': !groupval?.isOpen}"></i>
+              </div>
+              <app-cargar-documentos id="{{i}}" [ticket]="ticket" [id]="i" [usuarioActual]="usuarioActual"
+                [emailsTemplate]="emailsTemplate" [actividad]="actividad"></app-cargar-documentos>
+            </accordion-group>
+          </accordion>
+        </fieldset>
+        <br>
+        <div class="line"></div>
+        <fieldset class="col-12 col-lg-12 px3">
+          <legend>Activities</legend>
+          <accordion [closeOthers]="true" style="margin-top:5px;">
+            <accordion-group *ngFor="let actividad of actividades; let i = index;" #groupval style="margin-top:5px;">
+              <div accordion-heading style="width:100%;">
+                {{actividad.actividad}}
+                <i class="pull-right float-xs-right glyphicon"
+                  [ngClass]="{'glyphicon-chevron-down': groupval?.isOpen, 'glyphicon-chevron-up': !groupval?.isOpen}"></i>
+              </div>
+              <app-cargar-documentos id="{{i}}" [ticket]="ticket" [id]="i" [usuarioActual]="usuarioActual"
+                [emailsTemplate]="emailsTemplate" [actividad]="actividad"></app-cargar-documentos>
+            </accordion-group>
+          </accordion>
+        </fieldset>
+
       </div>
       <div class="line"></div>
     </div>

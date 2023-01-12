@@ -14,7 +14,7 @@
       <li class="nav-item active">
         <a class="nav-link" routerLink="/quality-tickets/home" routerLinkActive="active">
           <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>QUALITY TICKETS</span></a>
+          <span>TRACING TICKETS</span></a>
       </li>
 
 
@@ -24,7 +24,7 @@
         SYSTEM
       </div>
 
-      <li *ngIf="esAdministrador" class="nav-item">
+      <li *ngIf="usuarioActual?.esAdministrador" class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
           aria-controls="collapseTwo">
           <i class="fas fa-fw fa-cog"></i>
@@ -79,7 +79,7 @@
       </li>
 
 
-      <li *ngIf="esAdministrador || esCliente" class="nav-item">
+      <li *ngIf="usuarioActual?.esAdministrador || usuarioActual?.esComercial" class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
           aria-expanded="true" aria-controls="collapseUtilities">
           <i class="fas fa-fw fa-wrench"></i>
@@ -88,14 +88,14 @@
         <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Customer area:</h6>
-            <a class="collapse-item" routerLink="/quality-tickets/create-request" routerLinkActive="active">Create
+            <a class="collapse-item" routerLink="/tickets-calidad/create-request" routerLinkActive="active">Create
               Request</a>
             <a class="collapse-item" routerLink="/quality-tickets/my-requests" routerLinkActive="active">My Requests</a>
           </div>
         </div>
       </li>
 
-      <li *ngIf="esAdministrador || esPostVenta" class="nav-item">
+      <li *ngIf="usuarioActual?.esAdministrador || usuarioActual?.esMarketing" class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true"
           aria-controls="collapsePages">
           <i class="fas fa-fw fa-folder"></i>
@@ -110,7 +110,22 @@
         </div>
       </li>
 
-      <li *ngIf="esAdministrador || esSoporte" class="nav-item">
+      <li *ngIf="usuarioActual?.esAdministrador || usuarioActual?.esSoporteLogistica" class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSupport"
+          aria-expanded="true" aria-controls="collapseSupport">
+          <i class="fas fa-fw fa-chart-area"></i>
+          <span>Support</span>
+        </a>
+        <div id="collapseSupport" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Support area:</h6>
+            <a class="collapse-item" routerLink="/quality-tickets/support-requests" routerLinkActive="active">Support
+              requests</a>
+          </div>
+        </div>
+      </li>
+
+      <li *ngIf="usuarioActual?.esAdministrador || usuarioActual?.esCalidad" class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSupport"
           aria-expanded="true" aria-controls="collapseSupport">
           <i class="fas fa-fw fa-chart-area"></i>

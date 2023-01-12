@@ -1,0 +1,54 @@
+<p></p>
+<form *ngIf="formularioAsignarResponsables" [formGroup]="formularioAsignarResponsables" (ngSubmit)="onSubmitSend()">
+  <div class="form-group row">
+    <div class="col-lg-12">
+      <label for="hitos" class="form-control-label text-uppercase">Marketing users </label>
+      <ng-select id="userMarketing" name="userMarketing" formControlName="userMarketing" class="form-control" labelForId="userMarketing"
+        placeholder="Look for a marketing user" [items]="usuariosMarketing" bindLabel="nombre" bindValue="nombre"
+        notFoundText="No user found" (change)="seleccionarUsuarioMarketing($event)" [ngClass]="{ 'is-invalid': submitted && f.userMarketing.errors }">
+      </ng-select>
+      <div *ngIf="submitted && f.userMarketing.errors" class="invalid-feedback">
+        <div *ngIf="f.userMarketing.errors.required">This field is required
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <div class="col-lg-12">
+      <label for="hitos" class="form-control-label text-uppercase"> Support and logistics users </label>
+      <ng-select id="userSupport" name="userSupport" formControlName="userSupport" class="form-control" labelForId="userSupport"
+        placeholder="Look for a support and logistic user" [items]="usuariosSoporteLogistica" bindLabel="nombre" bindValue="nombre"
+        notFoundText="No user found" (change)="seleccionarUsuarioSoporteLogistica($event)" [ngClass]="{ 'is-invalid': submitted && f.userSupport.errors }">
+      </ng-select>
+      <div *ngIf="submitted && f.userSupport.errors" class="invalid-feedback">
+        <div *ngIf="f.userSupport.errors.required">This field is required
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <div class="col-lg-12">
+      <label for="hitos" class="form-control-label text-uppercase">Quality assurance users </label>
+      <ng-select id="userQuality" name="userQuality" formControlName="userQuality" class="form-control" labelForId="userQuality"
+        placeholder="Look for a quality assurance user" [items]="usuariosCalidad" bindLabel="nombre" bindValue="nombre"
+        notFoundText="No user found" (change)="seleccionarUsuarioCalidad($event)" [ngClass]="{ 'is-invalid': submitted && f.userQuality.errors }">
+      </ng-select>
+      <div *ngIf="submitted && f.userQuality.errors" class="invalid-feedback">
+        <div *ngIf="f.userQuality.errors.required">This field is required
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="line"></div>
+    <div class="col-lg-12 zona-botones">
+      <button type="button" class="btn btn-secondary cancelar botonera" (click)="cancel()">
+        Cancel
+      </button>
+      <button type="button" class="btn btn-secondary cancelar botonera" (click)="reject()">
+        Reject
+      </button>
+      <button type="submit" class="btn btn-success um-success botonera">
+        Send
+      </button>
+    </div>
+</form>

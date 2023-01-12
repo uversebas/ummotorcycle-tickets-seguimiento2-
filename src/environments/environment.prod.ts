@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  web: 'https://ummotorcycles.sharepoint.com/sites/quality-reports'
+  web: 'https://wakandasolutions.sharepoint.com/sites/umtracingtickets'
 };

@@ -1,5 +1,18 @@
 @import "~@ng-select/ng-select/themes/default.theme.css";
+@import "../node_modules/ngx-bootstrap/datepicker/bs-datepicker.css";
 /* You can add global styles to this file, and also import other style files */
+
+.reject .panel-heading {
+  background-color: rgb(237, 123, 123) !important;
+}
+
+.pending .panel-heading {
+  background-color: rgb(243, 207, 140) !important;
+}
+
+.approve .panel-heading {
+  background-color: rgb(170, 214, 170) !important;
+}
 
 .ng-select-container {
   padding: 0.4rem 0.8rem !important;

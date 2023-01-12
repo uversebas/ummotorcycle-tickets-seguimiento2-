@@ -3,24 +3,30 @@ import { environment } from 'src/environments/environment';
 import { String } from 'typescript-string-operations';
 
 export class Constantes {
-  static listaConfiguracionRegiones = 'RegionSettings';
-  static listaAyudasContextuales = 'ContextualAids';
-  static listaTicket = 'Requests';
-  static listaPartes = 'Parts';
-  static listaMaestroVin = 'Vins';
-  static listaVin = 'Vin';
-  static listaTipoFallas = 'FailureTypes';
-  static listaModelos = 'Models';
-  static listaMotores = 'EngineCC';
-  static listaDocumentosProveedores = 'SupplierDocuments';
-  static listaPlantillaEmails = 'EmailTemplate';
+  static listaRolesActividades = 'RolPorActividad';
+  static listaTicket = 'TracingTickets';
   static bibliotecaDocumentosProveedores = 'SupplierDocumentsSupport';
-  static listaFabricas = 'Factories';
-  static listaCategoriasFallas = 'FailureCategory';
+  static bibliotecaDocumentosTicket = 'Documents';
+  static bibliotecaDocumentosManualesUsuario = 'UserManuals';
+  static bibliotecaDocumentosVinList = 'VinList';
+  static bibliotecaDocumentosVinDescription = 'VinDescription';
+  static bibliotecaDocumentosSparePartsLabeling = 'SparePartsLabeling';
+  static bibliotecaDocumentosReporteCalidad = 'QualityReport';
+  static bibliotecaDocumentosEmbarque = 'ShippingDocuments';
+  static bibliotecaDocumentosManualesPDI = 'PDIManuals';
+  static bibliotecaDocumentosManualesServicio = 'ServiceManuals';
+  static bibliotecaDocumentosHomologacion = 'Homologation';
+  static bibliotecaDocumentosFichaTecnica = 'DataSheet';
+  static bibliotecaDocumentosFotografias = 'Photographs';
+  static bibliotecaDocumentosLibroPartes = 'PartsBook';
+  static listaPlantillaEmails = 'EmailTemplate';
 
   static cookieUsuarioActual = 'usuarioActual';
-  static grupoClientesLATAM = 'CustomerLATAM';
-  static grupoAdministrador = 'Administrator';
+  static grupoAdministrador = 'Administrador';
+  static grupoComercial = 'Comercial';
+  static grupoSoporteLogistica = 'SoporteLogistica';
+  static grupoMarketing = 'Marketing';
+  static grupoCalidad = 'Calidad';
 
   static routerInicio = '/';
   static routerMisTickets = '/quality-tickets/my-requests';
@@ -29,7 +35,7 @@ export class Constantes {
   static routerSoporteTickets = '/quality-tickets/support-requests';
 
   static urlSite = 'https://ummotorcycles.sharepoint.com/';
-  static urlRelativaSitio = '/sites/quality-reports/'
+  static urlRelativaSitio = '/sites/umtracingtickets/'
 
   static nombreDocumentoCliente = 'CR-TICKET-{0}.{1}'
   static nombreDocumentoClienteRevision = 'CR-REVIEW-{0}.{1}';

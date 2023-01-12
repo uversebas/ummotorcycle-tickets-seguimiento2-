@@ -1,0 +1,52 @@
+<div class="row" *ngIf="documentosCargados.length > 0">
+    <fieldset class="col-12 col-lg">
+      <legend>Attached Files {{actividad.actividad}}</legend>
+      <ng-container>
+        <div class="row">
+          <div class="col-lg-3" *ngFor="let documento of documentosCargados">
+            <a href="{{documento.documento.url}}" download tooltip="{{documento.documento.nombre}}">
+              <img src="{{obtenerIconoDocumentoPorNombre(documento.documento.nombre)}}" alt="document">
+              <span>{{documento.documento.nombre}}</span>
+            </a>
+            <span *ngIf="!mostrarBotonAprobar && mostrarEditarDocumentos" class="fas fa-trash" style="margin:6px; cursor: pointer;" (click)="borrarDocumento(documento)"></span>
+          </div>
+        </div>
+      </ng-container>
+    </fieldset>
+  </div>
+  
+  <div class="row" *ngIf="mostrarEditarDocumentos">
+    <fieldset class="col-12 col-lg">
+      <legend>Attach documents {{actividad.actividad}}</legend>
+      <p>Attch Pdf, Excel or Image files</p>
+      <div class="row">
+        <div class="col-lg-12">
+          <label class="btn btn-primary btn-file btn-block">Upload documents<input type="file"
+            id="adjuntoCliente"
+            (change)="subirAdjuntosCliente($event)" style="display: none"
+            accept="application/pdf,.csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel, image/png, image/gif, image/jpeg"
+            multiple></label>
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-lg-3" *ngFor="let documento of documentos">
+          <img src="{{obtenerIconoDocumento(documento)}}" alt="document">
+          <span>{{documento.nombre}}</span>
+        </div>
+      </div>
+      <div class="line"></div>
+    </fieldset>
+  </div>
+  <div class="line"></div>
+  <div class="col-lg-12 zona-botones">
+    <button *ngIf="mostrarBotonAprobar" type="button" class="btn btn-secondary cancelar botonera" (click)="reject()">
+      Reject
+    </button>
+    <button *ngIf="mostrarBotonAprobar" class="btn btn-success um-success botonera" (click)="aprobar()">
+      Approve
+    </button>
+    <button *ngIf="!mostrarBotonAprobar && mostrarEditarDocumentos" class="btn btn-success um-success botonera" (click)="enviar()">
+      Send
+    </button>
+  </div>
