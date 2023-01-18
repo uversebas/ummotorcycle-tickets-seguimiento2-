@@ -9,7 +9,7 @@ declare var $: any;
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  public title = 'ummotorcycles-tickets-calidad';
+  public title = 'ummotorcycles-trancing-tickets';
   public usuarioActual: Usuario;
   public nombreUsuario: string;
 
