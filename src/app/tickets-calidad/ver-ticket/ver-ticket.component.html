@@ -49,7 +49,8 @@
                       alt="document">
                     <span>{{documentoCargadoInicial.documento.nombre}}</span>
                   </a>
-                  <span *ngIf="mostrarEdicionDocumentosIniciales" class="fas fa-trash" style="margin:6px; cursor: pointer;" (click)="borrarDocumento(documentoCargadoInicial)"></span>
+                  <span *ngIf="mostrarEdicionDocumentosIniciales" class="fas fa-trash"
+                    style="margin:6px; cursor: pointer;" (click)="borrarDocumento(documentoCargadoInicial)"></span>
                 </div>
               </div>
             </ng-container>
@@ -94,7 +95,7 @@
         </fieldset>
       </div>
 
-<br>
+      <br>
       <div class="zona-documentos row" *ngIf="mostrarZonaDocumentos">
         <div class="line"></div>
         <fieldset class="col-12 col-lg-12 px3">
@@ -108,7 +109,8 @@
                   [ngClass]="{'glyphicon-chevron-down': groupval?.isOpen, 'glyphicon-chevron-up': !groupval?.isOpen}"></i>
               </div>
               <app-cargar-documentos id="{{i}}" [ticket]="ticket" [id]="i" [usuarioActual]="usuarioActual"
-                [emailsTemplate]="emailsTemplate" [actividad]="actividad"></app-cargar-documentos>
+                [comentariosAprobacion]="comentariosAprobacion" [emailsTemplate]="emailsTemplate"
+                [actividad]="actividad"></app-cargar-documentos>
             </accordion-group>
           </accordion>
         </fieldset>
@@ -124,7 +126,8 @@
                   [ngClass]="{'glyphicon-chevron-down': groupval?.isOpen, 'glyphicon-chevron-up': !groupval?.isOpen}"></i>
               </div>
               <app-cargar-documentos id="{{i}}" [ticket]="ticket" [id]="i" [usuarioActual]="usuarioActual"
-                [emailsTemplate]="emailsTemplate" [actividad]="actividad"></app-cargar-documentos>
+                [comentariosAprobacion]="comentariosAprobacion" [emailsTemplate]="emailsTemplate"
+                [actividad]="actividad"></app-cargar-documentos>
             </accordion-group>
           </accordion>
         </fieldset>

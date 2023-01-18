@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Constantes } from 'src/app/shared/constantes';
-import { ActividadPorRol, Documento, DocumentoCargado, PlantillaEmail, Ticket, Usuario } from 'src/app/shared/entidades';
-import { CorreoService, DocumentosService, ModalService, TicketService, UsuarioService } from 'src/app/shared/servicios';
+import { ActividadPorRol, Comentario, Documento, DocumentoCargado, PlantillaEmail, Ticket, Usuario } from 'src/app/shared/entidades';
+import { ComentarioService, CorreoService, DocumentosService, ModalService, TicketService, UsuarioService } from 'src/app/shared/servicios';
 import { IEmailProperties } from '@pnp/sp/sputilities';
 import { ProcessStatus, TicketStatus } from 'src/app/shared/enumerados';
 import { ActividadesPorRolService } from 'src/app/shared/servicios/actividadesPorRol.service';
@@ -28,6 +28,8 @@ export class VerTicketComponent implements OnInit {
   public propiedadesCorreo: IEmailProperties;
   public actividades: ActividadPorRol[] = [];
   public misActividades: ActividadPorRol[] = [];
+
+  public comentariosAprobacion: Comentario[] = [];
 
   public documentosCargadosIniciales: DocumentoCargado[] = [];
   public documentosAEliminarCargadosIniciales: DocumentoCargado[] = [];
@@ -62,7 +64,8 @@ export class VerTicketComponent implements OnInit {
     private servicioModal: BsModalService,
     private servicioNotificacion: ModalService,
     private router: Router,
-    private actividadPorRolService: ActividadesPorRolService) { }
+    private actividadPorRolService: ActividadesPorRolService,
+    private servicioComentarios: ComentarioService) { }
 
   ngOnInit() {
     this.spinner.show();
@@ -251,6 +254,7 @@ export class VerTicketComponent implements OnInit {
         this.servicioTicket.ObtenerPorId(id).subscribe(respuesta => {
           if (respuesta.length > 0) {
             this.ticket = Ticket.fromJson(respuesta[0]);
+            this.cargarComentariosAprobacion();
             this.obtenerDocumentosCargados();
             this.avance = Utilidades.calcularAvanceTicket(this.ticket);
           } else {
@@ -261,6 +265,13 @@ export class VerTicketComponent implements OnInit {
 
       }
     });
+  }
+
+  private async cargarComentariosAprobacion(): Promise<void> {
+    this.comentariosAprobacion = await this.servicioComentarios.obtenerComentariosAprobacion(
+      this.ticket.id,
+      Constantes.listaTicket
+    );
   }
 
   private obtenerDocumentosCargados(): void {
@@ -299,6 +310,14 @@ export class VerTicketComponent implements OnInit {
     if (this.usuarioActual.esAdministrador) {
       this.misActividades = this.misActividades.concat(this.actividades.filter(a => a.rol === Constantes.grupoAdministrador || a.aprobador === Constantes.grupoAdministrador))
     }
+
+    this.misActividades = this.misActividades.filter((thing, index, self) =>
+      index === self.findIndex((t) => (
+        t.id === thing.id
+      ))
+    );
+
+    this.misActividades = this.misActividades.sort((a, b) => a.id - b.id);
 
     this.actividades = this.actividades.filter(
       function (e) {

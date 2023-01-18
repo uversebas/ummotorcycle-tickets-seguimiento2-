@@ -1,8 +1,52 @@
-<app-administrador-tickets *ngIf="usuarioActual?.esAdministrador"></app-administrador-tickets><br>
-<app-comercial-tickets *ngIf="usuarioActual?.esComercial"></app-comercial-tickets><br>
-<app-quality-tickets *ngIf="usuarioActual?.esCalidad"></app-quality-tickets><br>
-<app-solicitudes-marketing *ngIf="usuarioActual?.esMarketing"></app-solicitudes-marketing><br>
-<app-support-tickets *ngIf="usuarioActual?.esSoporteLogistica"></app-support-tickets>
+<fieldset *ngIf="usuarioActual?.esAdministrador" class="border p-2">
+  <legend class="w-auto">Administration</legend>
+  <div class="botonera-home">
+      <button class="button-home" routerLink="/tracing-tickets/all-requests"
+          routerLinkActive="active"><span>All tickets</span></button>
+  </div>
+</fieldset>
+
+<br>
+
+<fieldset *ngIf="usuarioActual?.esAdministrador || usuarioActual?.esComercial" class="border p-2">
+  <legend class="w-auto">Commercial</legend>
+  <div class="botonera-home">
+      <button class="button-home" routerLink="/tracing-tickets/comercial-tickets"
+          routerLinkActive="active"><span>My tickets</span></button>
+      <button class="button-home" routerLink="/tracing-tickets/create-request"
+          routerLinkActive="active"><span>Create ticket</span></button>
+  </div>
+</fieldset>
+
+<br>
+
+<fieldset *ngIf="usuarioActual?.esAdministrador || usuarioActual?.esCalidad" class="border p-2">
+  <legend class="w-auto">Quality Assurance</legend>
+  <div class="botonera-home">
+    <button class="button-home" routerLink="/tracing-tickets/quality-tickets"
+    routerLinkActive="active"><span>My tickets</span></button>
+  </div>
+</fieldset>
+
+<br>
+
+<fieldset *ngIf="usuarioActual?.esAdministrador || usuarioActual?.esMarketing" class="border p-2">
+  <legend class="w-auto">Marketing</legend>
+  <div class="botonera-home">
+    <button class="button-home" routerLink="/tracing-tickets/marketing-tickets"
+    routerLinkActive="active"><span>My tickets</span></button>
+  </div>
+</fieldset>
+
+<br>
+
+<fieldset *ngIf="usuarioActual?.esAdministrador || usuarioActual?.esSoporteLogistica" class="border p-2">
+  <legend class="w-auto">Support and Logisctic</legend>
+  <div class="botonera-home">
+    <button class="button-home" routerLink="/tracing-tickets/support-tickets"
+    routerLinkActive="active"><span>My tickets</span></button>
+  </div>
+</fieldset>
 
 <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
     <p style="font-size: 20px; color: white">Processing...</p>
