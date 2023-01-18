@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  web: 'https://wakandasolutions.sharepoint.com/sites/umtracingtickets'
+  web: 'https://ummotorcycles.sharepoint.com/sites/um-tracking-orders'
 };
 
 /*

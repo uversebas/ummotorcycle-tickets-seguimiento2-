@@ -14,10 +14,10 @@ export class ActividadesPorRolService {
       '*',
       'Rol/Title',
       'Rol/ID',
-      'Aprobador/Title',
-      'Aprobador/ID',
+      'Approver/Title',
+      'Approver/ID',
     ];
-    this.expands = ['Rol', 'Aprobador'];
+    this.expands = ['Rol', 'Approver'];
   }
 
   public obtenerTodos(): Observable<any[]> {
