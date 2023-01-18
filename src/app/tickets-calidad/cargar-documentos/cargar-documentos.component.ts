@@ -39,14 +39,14 @@ export class CargarDocumentosComponent implements OnInit {
   public mostrarBotonAprobar = false;
   public mostrarComentario = false;
 
-  public iconoDesconocido = '/assets/images/unknow-file.png';
+  public iconoDesconocido = 'assets/images/unknow-file.png';
   listaIconos = [
-    { tipo: 'pdf', icono: '/assets/images/icon-pdf.png' },
-    { tipo: 'xlsx', icono: '/assets/images/icon-excel.png' },
-    { tipo: 'xls', icono: '/assets/images/icon-excel.png' },
-    { tipo: 'csv', icono: '/assets/images/icon-excel.png' },
-    { tipo: 'docx', icono: '/assets/images/icon-word.png' },
-    { tipo: 'doc', icono: '/assets/images/icon-word.png' },
+    { tipo: 'pdf', icono: 'assets/images/icon-pdf.png' },
+    { tipo: 'xlsx', icono: 'assets/images/icon-excel.png' },
+    { tipo: 'xls', icono: 'assets/images/icon-excel.png' },
+    { tipo: 'csv', icono: 'assets/images/icon-excel.png' },
+    { tipo: 'docx', icono: 'assets/images/icon-word.png' },
+    { tipo: 'doc', icono: 'assets/images/icon-word.png' },
   ]
 
   constructor(private spinner: NgxSpinnerService,

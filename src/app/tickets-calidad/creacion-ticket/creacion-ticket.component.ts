@@ -43,14 +43,14 @@ export class CreacionTicketComponent implements OnInit {
   public emailsTemplate: PlantillaEmail[] = [];
   public documentos: Documento[] = [];
   public propiedadesCorreo: IEmailProperties;
-  public iconoDesconocido = '/assets/images/unknow-file.png';
+  public iconoDesconocido = 'assets/images/unknow-file.png';
   listaIconos = [
-    { tipo: 'pdf', icono: '/assets/images/icon-pdf.png' },
-    { tipo: 'xlsx', icono: '/assets/images/icon-excel.png' },
-    { tipo: 'xls', icono: '/assets/images/icon-excel.png' },
-    { tipo: 'csv', icono: '/assets/images/icon-excel.png' },
-    { tipo: 'docx', icono: '/assets/images/icon-word.png' },
-    { tipo: 'doc', icono: '/assets/images/icon-word.png' },
+    { tipo: 'pdf', icono: 'assets/images/icon-pdf.png' },
+    { tipo: 'xlsx', icono: 'assets/images/icon-excel.png' },
+    { tipo: 'xls', icono: 'assets/images/icon-excel.png' },
+    { tipo: 'csv', icono: 'assets/images/icon-excel.png' },
+    { tipo: 'docx', icono: 'assets/images/icon-word.png' },
+    { tipo: 'doc', icono: 'assets/images/icon-word.png' },
   ]
 
   public consecutivoTicket: string;
