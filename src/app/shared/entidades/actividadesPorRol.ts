@@ -14,7 +14,7 @@ export class ActividadPorRol {
     }
 
     public static fromJson(element: any): ActividadPorRol {
-        const actividad = new ActividadPorRol(element.Title, element.Rol.Title, element.Aprobador.Title, element.Library, element.ID);
+        const actividad = new ActividadPorRol(element.Title, element.Rol.Title, element.Approver.Title, element.Library, element.ID);
         return actividad;
     }
 

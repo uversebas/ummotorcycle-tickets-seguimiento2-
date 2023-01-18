@@ -53,7 +53,7 @@ export class SupportTicketsComponent implements OnInit {
         localStorage.getItem(Constantes.cookieUsuarioActual) != null
           ? JSON.parse(localStorage.getItem(Constantes.cookieUsuarioActual))
           : await this.servicioUsuario.ObtenerUsuario();
-      return this.usuarioActual.esComercial;
+      return this.usuarioActual.esSoporteLogistica;
     }
   
     ngOnDestroy(): void {

@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { DataTableDirective } from 'angular-datatables';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subject } from 'rxjs';
@@ -21,7 +22,8 @@ export class ComercialTicketsComponent implements OnInit {
   solicitudes: Ticket[] = [];
   constructor(private spinner: NgxSpinnerService,
     private servicioUsuario: UsuarioService,
-    private servicioTicket: TicketService) { }
+    private servicioTicket: TicketService,
+    private router: Router,) { }
 
     async ngOnInit(): Promise<void> {
       const ingreso = await this.validarIngreso();
@@ -62,6 +64,10 @@ export class ComercialTicketsComponent implements OnInit {
   
     private configurarDataTable(): void {
       this.dtOptions = AppSettings.obtenerConfiguracionTablaGeneral();
+    }
+
+    crearTicket(): void {
+      this.router.navigate(['tracing-tickets/create-request'])
     }
 
 }

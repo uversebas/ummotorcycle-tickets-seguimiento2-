@@ -34,6 +34,8 @@ export class Ticket {
   public usuarioCalidad?: Usuario;
   public usuarioAdministrador?: Usuario;
 
+  public comentarioAprobacionAutomarica?: string;
+
   constructor(
     orden: string,
     pais: string,

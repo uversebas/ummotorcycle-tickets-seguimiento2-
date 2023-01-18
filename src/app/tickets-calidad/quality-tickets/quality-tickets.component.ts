@@ -53,7 +53,7 @@ export class QualityTicketsComponent implements OnInit {
         localStorage.getItem(Constantes.cookieUsuarioActual) != null
           ? JSON.parse(localStorage.getItem(Constantes.cookieUsuarioActual))
           : await this.servicioUsuario.ObtenerUsuario();
-      return this.usuarioActual.esComercial;
+      return this.usuarioActual.esCalidad;
     }
   
     ngOnDestroy(): void {

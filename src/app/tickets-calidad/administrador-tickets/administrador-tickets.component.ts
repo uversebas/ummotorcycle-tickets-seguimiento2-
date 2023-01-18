@@ -23,7 +23,8 @@ export class AdministradorTicketsComponent implements OnInit {
   constructor(
     private spinner: NgxSpinnerService,
     private servicioUsuario: UsuarioService,
-    private servicioTicket: TicketService
+    private servicioTicket: TicketService,
+    private router: Router,
   ) { }
 
   async ngOnInit(): Promise<void> {
@@ -56,8 +57,7 @@ export class AdministradorTicketsComponent implements OnInit {
       localStorage.getItem(Constantes.cookieUsuarioActual) != null
         ? JSON.parse(localStorage.getItem(Constantes.cookieUsuarioActual))
         : await this.servicioUsuario.ObtenerUsuario();
-    const esAdministrador = this.usuarioActual.esAdministrador;
-    return esAdministrador;
+    return this.usuarioActual.esAdministrador;
   }
 
   ngOnDestroy(): void {
@@ -66,6 +66,10 @@ export class AdministradorTicketsComponent implements OnInit {
 
   private configurarDataTable(): void {
     this.dtOptions = AppSettings.obtenerConfiguracionTablaGeneral();
+  }
+
+  crearTicket(): void {
+    this.router.navigate(['tracing-tickets/create-request'])
   }
 
 }

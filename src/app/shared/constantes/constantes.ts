@@ -3,7 +3,7 @@ import { environment } from 'src/environments/environment';
 import { String } from 'typescript-string-operations';
 
 export class Constantes {
-  static listaRolesActividades = 'RolPorActividad';
+  static listaRolesActividades = 'ActivitiesRol';
   static listaTicket = 'TracingTickets';
   static bibliotecaDocumentosProveedores = 'SupplierDocumentsSupport';
   static bibliotecaDocumentosTicket = 'Documents';
@@ -16,17 +16,17 @@ export class Constantes {
   static bibliotecaDocumentosManualesPDI = 'PDIManuals';
   static bibliotecaDocumentosManualesServicio = 'ServiceManuals';
   static bibliotecaDocumentosHomologacion = 'Homologation';
-  static bibliotecaDocumentosFichaTecnica = 'DataSheet';
+  static bibliotecaDocumentosFichaTecnica = 'TechnicalSpecification';
   static bibliotecaDocumentosFotografias = 'Photographs';
   static bibliotecaDocumentosLibroPartes = 'PartsBook';
   static listaPlantillaEmails = 'EmailTemplate';
 
   static cookieUsuarioActual = 'usuarioActual';
-  static grupoAdministrador = 'Administrador';
-  static grupoComercial = 'Comercial';
-  static grupoSoporteLogistica = 'SoporteLogistica';
+  static grupoAdministrador = 'Administrator';
+  static grupoComercial = 'Commercial';
+  static grupoSoporteLogistica = 'SupportAndLogisctic';
   static grupoMarketing = 'Marketing';
-  static grupoCalidad = 'Calidad';
+  static grupoCalidad = 'QualityAssurance';
 
   static routerInicio = '/';
   static routerMisTickets = '/quality-tickets/my-requests';
@@ -35,7 +35,7 @@ export class Constantes {
   static routerSoporteTickets = '/quality-tickets/support-requests';
 
   static urlSite = 'https://ummotorcycles.sharepoint.com/';
-  static urlRelativaSitio = '/sites/umtracingtickets/'
+  static urlRelativaSitio = '/sites/um-tracking-orders/'
 
   static nombreDocumentoCliente = 'CR-TICKET-{0}.{1}'
   static nombreDocumentoClienteRevision = 'CR-REVIEW-{0}.{1}';

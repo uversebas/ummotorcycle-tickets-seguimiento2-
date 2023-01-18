@@ -211,7 +211,7 @@ export class CreacionTicketComponent implements OnInit {
     this.servicioNotificacion.Exito(
       'Great!',
       'The order ' + orden +' has been created successfully.',
-      () => this.router.navigate([Constantes.routerMisTickets])
+      () => this.router.navigate(['/'])
     );
   }
 
@@ -220,7 +220,7 @@ export class CreacionTicketComponent implements OnInit {
     this.servicioNotificacion.Error(
       string2.Format('Error {0}', titulo),
       'Ha ocurrido un error, inténtelo más tarde o comuniquese con el administrador',
-      () => this.router.navigate([Constantes.routerMisTickets])
+      () => this.router.navigate(['/'])
     );
   }
 

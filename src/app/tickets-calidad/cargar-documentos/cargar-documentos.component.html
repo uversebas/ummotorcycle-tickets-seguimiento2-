@@ -38,6 +38,16 @@
       <div class="line"></div>
     </fieldset>
   </div>
+  <div class="row" *ngIf="mostrarComentario">
+    <div class="col-lg-12">
+      <textarea autosize name="comentario" id="comentario" class="form-control" rows="3"
+        placeholder="Please write a comment ..." style="resize: none" [(ngModel)]="comentario"
+        [ngClass]="{ 'is-invalid': submitted && comentario.length === 0}"></textarea>
+      <div *ngIf="submitted && comentario.length === 0" class="invalid-feedback">
+          This field is required
+      </div>
+    </div>
+  </div>
   <div class="line"></div>
   <div class="col-lg-12 zona-botones">
     <button *ngIf="mostrarBotonAprobar" type="button" class="btn btn-secondary cancelar botonera" (click)="reject()">

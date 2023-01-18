@@ -1,7 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Guid } from 'guid-typescript';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Constantes } from 'src/app/shared/constantes';
@@ -16,9 +14,11 @@ import { AgregarComentarioComponent } from '../agregar-comentario/agregar-coment
   styleUrls: ['./cargar-documentos.component.css']
 })
 export class CargarDocumentosComponent implements OnInit {
-  cargarDocumentosFormGroup: FormGroup;
-
   bsModalRef: BsModalRef;
+
+  submitted = false;
+  comentario: string = '';
+
 
   @Input() id;
 
@@ -35,6 +35,7 @@ export class CargarDocumentosComponent implements OnInit {
 
   public mostrarEditarDocumentos = false;
   public mostrarBotonAprobar = false;
+  public mostrarComentario = false;
 
   public iconoDesconocido = '/assets/images/unknow-file.png';
   listaIconos = [
@@ -100,6 +101,13 @@ export class CargarDocumentosComponent implements OnInit {
   }
 
   public enviar(): void {
+    if (this.mostrarComentario) {
+      this.submitted = true;
+      if (this.comentario.length === 0) {
+        return;
+      }
+      this.ticket.comentarioAprobacionAutomarica = `${this.actividad.actividad}: ${this.comentario}`;
+    }
     if (this.documentos.length > 0 || !this.mostrarBotonAprobar) {
       this.spinner.show();
       if (this.documentosAEliminar.length > 0) {
@@ -116,7 +124,7 @@ export class CargarDocumentosComponent implements OnInit {
 
   private eliminarDocumentos(): void {
     if (this.documentosAEliminar.length > 0) {
-      this.servicioDocumentos.eliminarArchivos(this.ticket, this.actividad.biblioteca, this.documentosAEliminar).then(() => {}); 
+      this.servicioDocumentos.eliminarArchivos(this.ticket, this.actividad.biblioteca, this.documentosAEliminar).then(() => { });
     }
   }
 
@@ -276,7 +284,7 @@ export class CargarDocumentosComponent implements OnInit {
       this.ticket.estadoManualTecnico === ProcessStatus.Approved &&
       this.ticket.estadoFotografias === ProcessStatus.Approved &&
       this.ticket.estadoLibroPartes === ProcessStatus.Approved) {
-       this.ticket.estado === TicketStatus.COMPLETED;
+      this.ticket.estado === TicketStatus.COMPLETED;
     }
   }
 
@@ -341,6 +349,7 @@ export class CargarDocumentosComponent implements OnInit {
   }
 
   private visibilidad(): void {
+    this.mostrarComentario = this.actividad.rol === this.actividad.aprobador && (this.ticket.estadoManualUsuario !== ProcessStatus.Approved || this.ticket.estadoVinList !== ProcessStatus.Approved);
     switch (this.actividad.biblioteca) {
       case Constantes.bibliotecaDocumentosManualesUsuario:
         this.mostrarEditarDocumentos = (this.ticket.estadoManualUsuario === ProcessStatus.Pending || this.ticket.estadoManualUsuario === ProcessStatus.Reject) &&

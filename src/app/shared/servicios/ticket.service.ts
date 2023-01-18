@@ -379,7 +379,8 @@ export class TicketService {
     .items.getById(ticket.id)
     .update({
       UserManualsStatus: ticket.estadoManualUsuario,
-      Status: ticket.estado
+      Status: ticket.estado,
+      ApproveComment: ticket.comentarioAprobacionAutomarica
     });
   }
 
@@ -390,7 +391,8 @@ export class TicketService {
     .items.getById(ticket.id)
     .update({
       VinListStatus: ticket.estadoVinList,
-      Status: ticket.estado
+      Status: ticket.estado,
+      ApproveComment: ticket.comentarioAprobacionAutomarica
     });
   }
 
@@ -401,7 +403,8 @@ export class TicketService {
     .items.getById(ticket.id)
     .update({
       VinDescriptionStatus: ticket.estadoVinDescription,
-      Status: ticket.estado
+      Status: ticket.estado,
+      ApproveComment: ticket.comentarioAprobacionAutomarica
     });
   }
 
@@ -412,7 +415,8 @@ export class TicketService {
     .items.getById(ticket.id)
     .update({
       SparePartsLabelingStatus: ticket.estadoSparePartsLabel,
-      Status: ticket.estado
+      Status: ticket.estado,
+      ApproveComment: ticket.comentarioAprobacionAutomarica
     });
   }
 
@@ -423,7 +427,8 @@ export class TicketService {
     .items.getById(ticket.id)
     .update({
       QualityReportStatus: ticket.estadoReporteCalidad,
-      Status: ticket.estado
+      Status: ticket.estado,
+      ApproveComment: ticket.comentarioAprobacionAutomarica
     });
   }
 
@@ -434,7 +439,8 @@ export class TicketService {
     .items.getById(ticket.id)
     .update({
       ShippingDocumentsStatus: ticket.estadoDocumentoEmbarque,
-      Status: ticket.estado
+      Status: ticket.estado,
+      ApproveComment: ticket.comentarioAprobacionAutomarica
     });
   }
 
@@ -445,7 +451,8 @@ export class TicketService {
     .items.getById(ticket.id)
     .update({
       PDIManualsStatus: ticket.estadoManualPDI,
-      Status: ticket.estado
+      Status: ticket.estado,
+      ApproveComment: ticket.comentarioAprobacionAutomarica
     });
   }
 
@@ -456,7 +463,8 @@ export class TicketService {
     .items.getById(ticket.id)
     .update({
       ServiceManualsStatus: ticket.estadoManualesServicio,
-      Status: ticket.estado
+      Status: ticket.estado,
+      ApproveComment: ticket.comentarioAprobacionAutomarica
     });
   }
 
@@ -467,7 +475,8 @@ export class TicketService {
     .items.getById(ticket.id)
     .update({
       HomologationStatus: ticket.estadoHomologacion,
-      Status: ticket.estado
+      Status: ticket.estado,
+      ApproveComment: ticket.comentarioAprobacionAutomarica
     });
   }
 
@@ -478,7 +487,8 @@ export class TicketService {
     .items.getById(ticket.id)
     .update({
       DataSheetStatus: ticket.estadoManualTecnico,
-      Status: ticket.estado
+      Status: ticket.estado,
+      ApproveComment: ticket.comentarioAprobacionAutomarica
     });
   }
 
@@ -489,7 +499,8 @@ export class TicketService {
     .items.getById(ticket.id)
     .update({
       PhotographsStatus: ticket.estadoFotografias,
-      Status: ticket.estado
+      Status: ticket.estado,
+      ApproveComment: ticket.comentarioAprobacionAutomarica
     });
   }
 
@@ -500,7 +511,8 @@ export class TicketService {
     .items.getById(ticket.id)
     .update({
       PartsBookStatus: ticket.estadoLibroPartes,
-      Status: ticket.estado
+      Status: ticket.estado,
+      ApproveComment: ticket.comentarioAprobacionAutomarica
     });
   }
 
