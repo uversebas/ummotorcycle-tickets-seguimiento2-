@@ -30,7 +30,7 @@
             </div>
             <div class="col-lg-4">
               <label for="fecha" class="form-control-label text-uppercase">Date</label><br>
-              <span>{{ticket?.fecha}}</span>
+              <span>{{ticket?.fecha | date: 'dd/MM/yyyy'}}</span>
             </div>
           </div>
         </fieldset>
