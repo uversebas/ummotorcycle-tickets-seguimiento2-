@@ -42,6 +42,8 @@ export class Constantes {
   static nombreDocumentoProveedor = 'SD-{0}.{1}';
   static nombreCarpetaTicketProveedores = 'ticket-{0}';
 
+  static linkSitio = environment.web;
+
   static linkTicketsClientes = String.Format(
     '{0}{1}',
     environment.web,

@@ -37,6 +37,7 @@ export class CreacionTicketComponent implements OnInit {
   formularioCreacionTicket: FormGroup;
   submitted = false;
   public usuarioActual: Usuario;
+  public usuariosAdministradores: Usuario[] = [];
   public imagenes: string[] = [];
   public imagenesSubir: Documento[] = [];
   public data: [][];
@@ -110,6 +111,13 @@ export class CreacionTicketComponent implements OnInit {
   private obtenerPlantillasEmail(): void {
     this.servicioCorreo.obtenerEmails().subscribe((respuesta) => {
       this.emailsTemplate = PlantillaEmail.fromJsonList(respuesta);
+      this.obtenerUsuarioAdministradores();
+    });
+  }
+
+  private obtenerUsuarioAdministradores(): void {
+    this.servicioUsuario.ObtenerUsuariosEnGrupo(Constantes.grupoAdministrador).subscribe((respuesta) => {
+      this.usuariosAdministradores = Usuario.fromJsonList(respuesta);
       this.spinner.hide();
     });
   }
@@ -140,7 +148,7 @@ export class CreacionTicketComponent implements OnInit {
     this.documentosService.crearCarpetaTicket(ticket.orden, Constantes.bibliotecaDocumentosTicket).then(() => {
       const documentosASubir = this.documentos.concat(this.imagenesSubir);
       this.documentosService.agregarArchivos(ticket, Constantes.bibliotecaDocumentosTicket, documentosASubir).then(() => {
-        this.mostrarMensajeExitoso(ticket.orden);
+        this.enviarCorreo(ticket.orden);
       });
     });
   }
@@ -178,28 +186,20 @@ export class CreacionTicketComponent implements OnInit {
     return this.iconoDesconocido;
   }
 
-  private obtenerPropiedadesCorreoEnvioCliente(ticket: Ticket): void {
+  private obtenerPropiedadesCorreoEnvioCliente(orden: string): void {
     const plantilla = this.emailsTemplate.find(p => p.nombre === EmailType.CREATED);
-    this.propiedadesCorreo = {
-      To: [''],
-      Subject: plantilla.asunto,
-      Body: string2.Format(
-        plantilla.body,
-        ticket.orden,
-        Constantes.linkTicketsClientes
-      ),
-      CC: plantilla.cc,
-      AdditionalHeaders: {
-        'content-type': 'text/html',
-      },
-    };
+    const para = this.usuariosAdministradores.map(ua => ua.email);
+    const asunto = string2.Format(plantilla.asunto, orden);
+    const cuerpo = string2.Format(plantilla.body, this.usuarioActual.nombre, orden, Constantes.linkSitio);
+    this.propiedadesCorreo = this.servicioCorreo.asignarPropiedasEmail(para, asunto, cuerpo);
   }
 
-  private enviarCorreo(): void {
+  private enviarCorreo(orden: string): void {
+    this.obtenerPropiedadesCorreoEnvioCliente(orden);
     this.servicioCorreo
       .Enviar(this.propiedadesCorreo)
       .then(() => {
-        this.mostrarMensajeExitoso('');
+        this.mostrarMensajeExitoso(orden);
       })
       .catch((e) => {
         this.mostrarAlertaError('Send email', e);
