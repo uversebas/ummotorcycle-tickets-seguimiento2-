@@ -1,12 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { IEmailProperties } from '@pnp/sp/sputilities';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Constantes } from 'src/app/shared/constantes';
 import { PlantillaEmail, Ticket, Usuario } from 'src/app/shared/entidades';
-import { TicketStatus } from 'src/app/shared/enumerados';
-import { DocumentosService, ModalService, TicketService, UsuarioService } from 'src/app/shared/servicios';
+import { EmailType, TicketStatus } from 'src/app/shared/enumerados';
+import { CorreoService, DocumentosService, ModalService, TicketService, UsuarioService } from 'src/app/shared/servicios';
 import { String as string2 } from 'typescript-string-operations';
 import { AgregarComentarioComponent } from '../agregar-comentario/agregar-comentario.component';
 
@@ -25,6 +26,8 @@ export class AssingResponsableComponent implements OnInit {
   public usuariosCalidad: Usuario[] = [];
   public usuarioCalidadSeleccionado: Usuario = null;
 
+  public propiedadesCorreo: IEmailProperties;
+
   bsModalRef: BsModalRef;
 
   @Input() ticket: Ticket;
@@ -39,6 +42,7 @@ export class AssingResponsableComponent implements OnInit {
     private servicioDocumentos: DocumentosService,
     private servicioNotificacion: ModalService,
     private servicioModal: BsModalService,
+    private servicioCorreo: CorreoService,
     private router: Router) { }
 
   ngOnInit() {
@@ -116,7 +120,27 @@ export class AssingResponsableComponent implements OnInit {
     this.servicioDocumentos.crearCarpetaTicket(this.ticket.orden, Constantes.bibliotecaDocumentosFichaTecnica).then();
     this.servicioDocumentos.crearCarpetaTicket(this.ticket.orden, Constantes.bibliotecaDocumentosFotografias).then();
     this.servicioDocumentos.crearCarpetaTicket(this.ticket.orden, Constantes.bibliotecaDocumentosLibroPartes).then();
-    this.mostrarMensajeExitoso(this.ticket.orden);
+    this.enviarCorreo();
+  }
+
+  private obtenerPropiedadesCorreoEnvioAsignaciones(orden: string): void {
+    const plantilla = this.emailsTemplate.find(p => p.nombre === EmailType.ASSIGNED);
+    const para = [this.usuarioSoporteLogisticaSeleccionado.email, this.usuarioCalidadSeleccionado.email, this.usuarioMarketingSeleccionado.email];
+    const asunto = string2.Format(plantilla.asunto, orden);
+    const cuerpo = string2.Format(plantilla.body, this.usuarioActual.nombre, orden, Constantes.linkSitio);
+    this.propiedadesCorreo = this.servicioCorreo.asignarPropiedasEmail(para, asunto, cuerpo);
+  }
+
+  private enviarCorreo(): void {
+    this.obtenerPropiedadesCorreoEnvioAsignaciones(this.ticket.orden);
+    this.servicioCorreo
+      .Enviar(this.propiedadesCorreo)
+      .then(() => {
+        this.mostrarMensajeExitoso(this.ticket.orden);
+      })
+      .catch((e) => {
+        this.mostrarAlertaError('Send email', e);
+      });
   }
 
   private mostrarMensajeExitoso(orden: string): void {
@@ -151,6 +175,7 @@ export class AssingResponsableComponent implements OnInit {
     this.bsModalRef.content.ticket = this.ticket;
     this.bsModalRef.content.usuarioDestinatario = this.ticket.creador;
     this.bsModalRef.content.emailsTemplate = this.emailsTemplate;
+    this.bsModalRef.content.usuarioActual = this.usuarioActual;
   }
 
 }

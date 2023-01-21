@@ -4,9 +4,11 @@ import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Constantes } from 'src/app/shared/constantes';
 import { ActividadPorRol, Comentario, Documento, DocumentoCargado, PlantillaEmail, Ticket, Usuario } from 'src/app/shared/entidades';
-import { ProcessStatus, TicketStatus } from 'src/app/shared/enumerados';
-import { DocumentosService, ModalService, TicketService, UsuarioService } from 'src/app/shared/servicios';
+import { EmailType, ProcessStatus, TicketStatus } from 'src/app/shared/enumerados';
+import { CorreoService, DocumentosService, ModalService, TicketService, UsuarioService } from 'src/app/shared/servicios';
 import { AgregarComentarioComponent } from '../agregar-comentario/agregar-comentario.component';
+import { String } from 'typescript-string-operations';
+import { IEmailProperties } from '@pnp/sp/sputilities';
 
 @Component({
   selector: 'app-cargar-documentos',
@@ -34,6 +36,7 @@ export class CargarDocumentosComponent implements OnInit {
   public documentos: Documento[] = [];
   public documentosAEliminar: DocumentoCargado[] = [];
   public comentariosActividad: Comentario[] = [];
+  public propiedadesCorreo: IEmailProperties;
 
   public mostrarEditarDocumentos = false;
   public mostrarBotonAprobar = false;
@@ -51,10 +54,10 @@ export class CargarDocumentosComponent implements OnInit {
 
   constructor(private spinner: NgxSpinnerService,
     private servicioTicket: TicketService,
-    private servicioUsuario: UsuarioService,
     private servicioDocumentos: DocumentosService,
     private servicioNotificacion: ModalService,
     private servicioModal: BsModalService,
+    private servicioCorreo: CorreoService,
     private router: Router) {
   }
 
@@ -188,49 +191,49 @@ export class CargarDocumentosComponent implements OnInit {
     gestion === false ? this.ticket.estadoVinList = ProcessStatus.Send : this.ticket.estadoVinList = ProcessStatus.Approved;
     this.validarEstadoTicket();
     this.servicioTicket.enviarVinList(this.ticket).then(() => {
-      this.mostrarMensajeExitoso(this.ticket.orden);
+      this.ticket.estadoVinList === ProcessStatus.Approved ? this.enviarCorreoAprobarActividad() : this.mostrarMensajeExitoso(this.ticket.orden);
     });
   }
   enviarVinDescription(gestion: boolean) {
     gestion === false ? this.ticket.estadoVinDescription = ProcessStatus.Send : this.ticket.estadoVinDescription = ProcessStatus.Approved;
     this.validarEstadoTicket();
     this.servicioTicket.enviarVinDescription(this.ticket).then(() => {
-      this.mostrarMensajeExitoso(this.ticket.orden);
+      this.ticket.estadoVinDescription === ProcessStatus.Approved ? this.enviarCorreoAprobarActividad() : this.mostrarMensajeExitoso(this.ticket.orden);
     });
   }
   enviarSparePartsLabeling(gestion: boolean) {
     this.ticket.estadoSparePartsLabel = ProcessStatus.Approved;
     this.validarEstadoTicket();
     this.servicioTicket.enviarSparePartsLabel(this.ticket).then(() => {
-      this.mostrarMensajeExitoso(this.ticket.orden);
+      this.ticket.estadoSparePartsLabel === ProcessStatus.Approved ? this.enviarCorreoAprobarActividad() : this.mostrarMensajeExitoso(this.ticket.orden);
     });
   }
   enviarReporteCalidad(gestion: boolean) {
     gestion === false ? this.ticket.estadoReporteCalidad = ProcessStatus.Send : this.ticket.estadoReporteCalidad = ProcessStatus.Approved;
     this.validarEstadoTicket();
     this.servicioTicket.enviarReporteCalidad(this.ticket).then(() => {
-      this.mostrarMensajeExitoso(this.ticket.orden);
+      this.ticket.estadoReporteCalidad === ProcessStatus.Approved ? this.enviarCorreoAprobarActividad() : this.mostrarMensajeExitoso(this.ticket.orden);
     });
   }
   enviarEmbarque(gestion: boolean) {
     gestion === false ? this.ticket.estadoDocumentoEmbarque = ProcessStatus.Send : this.ticket.estadoDocumentoEmbarque = ProcessStatus.Approved;
     this.validarEstadoTicket();
     this.servicioTicket.enviarDocumentoEmbarque(this.ticket).then(() => {
-      this.mostrarMensajeExitoso(this.ticket.orden);
+      this.ticket.estadoDocumentoEmbarque === ProcessStatus.Approved ? this.enviarCorreoAprobarActividad() : this.mostrarMensajeExitoso(this.ticket.orden);
     });
   }
   enviarPDI(gestion: boolean) {
     gestion === false ? this.ticket.estadoManualPDI = ProcessStatus.Send : this.ticket.estadoManualPDI = ProcessStatus.Approved;
     this.validarEstadoTicket();
     this.servicioTicket.enviarManualPDI(this.ticket).then(() => {
-      this.mostrarMensajeExitoso(this.ticket.orden);
+      this.ticket.estadoManualPDI === ProcessStatus.Approved ? this.enviarCorreoAprobarActividad() : this.mostrarMensajeExitoso(this.ticket.orden);
     });
   }
   enviarManualUsuarioServicio(gestion: boolean) {
     this.ticket.estadoManualUsuario = ProcessStatus.Approved;
     this.validarEstadoTicket();
     this.servicioTicket.enviarManualUsuario(this.ticket).then(() => {
-      this.mostrarMensajeExitoso(this.ticket.orden);
+      this.ticket.estadoManualUsuario === ProcessStatus.Approved ? this.enviarCorreoAprobarActividad() : this.mostrarMensajeExitoso(this.ticket.orden);
     });
   }
 
@@ -238,35 +241,35 @@ export class CargarDocumentosComponent implements OnInit {
     gestion === false ? this.ticket.estadoManualesServicio = ProcessStatus.Send : this.ticket.estadoManualesServicio = ProcessStatus.Approved;
     this.validarEstadoTicket();
     this.servicioTicket.enviarManualesServicio(this.ticket).then(() => {
-      this.mostrarMensajeExitoso(this.ticket.orden);
+      this.ticket.estadoManualesServicio === ProcessStatus.Approved ? this.enviarCorreoAprobarActividad() : this.mostrarMensajeExitoso(this.ticket.orden);
     });
   }
   enviarHomologacion(gestion: boolean) {
     this.ticket.estadoHomologacion = ProcessStatus.Approved;
     this.validarEstadoTicket();
     this.servicioTicket.enviarHomologacion(this.ticket).then(() => {
-      this.mostrarMensajeExitoso(this.ticket.orden);
+      this.ticket.estadoHomologacion === ProcessStatus.Approved ? this.enviarCorreoAprobarActividad() : this.mostrarMensajeExitoso(this.ticket.orden);
     });
   }
   enviarFichaTecnica(gestion: boolean) {
     gestion === false ? this.ticket.estadoManualTecnico = ProcessStatus.Send : this.ticket.estadoManualTecnico = ProcessStatus.Approved;
     this.validarEstadoTicket();
     this.servicioTicket.enviarManualTecnico(this.ticket).then(() => {
-      this.mostrarMensajeExitoso(this.ticket.orden);
+      this.ticket.estadoManualTecnico === ProcessStatus.Approved ? this.enviarCorreoAprobarActividad() : this.mostrarMensajeExitoso(this.ticket.orden);
     });
   }
   enviarFotografias(gestion: boolean) {
     gestion === false ? this.ticket.estadoFotografias = ProcessStatus.Send : this.ticket.estadoFotografias = ProcessStatus.Approved;
     this.validarEstadoTicket();
     this.servicioTicket.enviarFotografias(this.ticket).then(() => {
-      this.mostrarMensajeExitoso(this.ticket.orden);
+      this.ticket.estadoFotografias === ProcessStatus.Approved ? this.enviarCorreoAprobarActividad() : this.mostrarMensajeExitoso(this.ticket.orden);
     });
   }
   enviarLibroPartes(gestion: boolean) {
     this.ticket.estadoLibroPartes = ProcessStatus.Approved;
     this.validarEstadoTicket();
     this.servicioTicket.enviarLibroPartes(this.ticket).then(() => {
-      this.mostrarMensajeExitoso(this.ticket.orden);
+      this.ticket.estadoLibroPartes === ProcessStatus.Approved ? this.enviarCorreoAprobarActividad() : this.mostrarMensajeExitoso(this.ticket.orden);
     });
   }
   enviarTicket() {
@@ -290,12 +293,42 @@ export class CargarDocumentosComponent implements OnInit {
     }
   }
 
+  private obtenerPropiedadesCorreoProcesarActividad(orden: string): void {
+    const plantilla = this.emailsTemplate.find(p => p.nombre === EmailType.APPROVEACTIVITY);
+    const destinatario = this.obtenerDestinatario();
+    const para = [destinatario.email];
+    const asunto = String.Format(plantilla.asunto, this.actividad.actividad, orden);
+    const cuerpo = String.Format(plantilla.body, destinatario.nombre, this.usuarioActual.nombre, this.actividad.actividad, orden, Constantes.linkSitio);
+    this.propiedadesCorreo = this.servicioCorreo.asignarPropiedasEmail(para, asunto, cuerpo);
+  }
+
+  private enviarCorreoAprobarActividad(): void {
+    this.obtenerPropiedadesCorreoProcesarActividad(this.ticket.orden);
+    this.servicioCorreo
+      .Enviar(this.propiedadesCorreo)
+      .then(() => {
+        this.mostrarMensajeExitoso(this.ticket.orden);
+      })
+      .catch((e) => {
+        this.mostrarAlertaError('Send email', e);
+      });
+  }
+
   private mostrarMensajeExitoso(orden: string): void {
     this.spinner.hide();
     this.servicioNotificacion.Exito(
       'Great!',
       'The order ' + orden + ' has been processes successfully.',
       () => window.location.reload()
+    );
+  }
+
+  private mostrarAlertaError(titulo: string, error: any): void {
+    this.spinner.hide();
+    this.servicioNotificacion.Error(
+      String.Format('Error {0}', titulo),
+      'Ha ocurrido un error, inténtelo más tarde o comuniquese con el administrador',
+      () => this.router.navigate(['/'])
     );
   }
 
@@ -322,6 +355,8 @@ export class CargarDocumentosComponent implements OnInit {
     this.bsModalRef.content.usuarioDestinatario = this.obtenerDestinatario();
     this.bsModalRef.content.emailsTemplate = this.emailsTemplate;
     this.bsModalRef.content.biblioteca = this.actividad.biblioteca;
+    this.bsModalRef.content.usuarioActual = this.usuarioActual;
+    this.bsModalRef.content.actividad = this.actividad;
   }
 
   private obtenerDestinatario(): Usuario {
