@@ -10,10 +10,7 @@ import { Usuario } from 'src/app/shared/entidades';
 })
 export class HomeComponent implements OnInit {
   public usuarioActual: Usuario;
-  public esAdministrador: boolean;
-  public esCliente: boolean;
-  public esPostVenta: boolean;
-  public esSoporte: boolean;
+  public mostrarHome = false;
 
   constructor(
     private spinner: NgxSpinnerService,
@@ -31,5 +28,6 @@ export class HomeComponent implements OnInit {
     this.usuarioActual = JSON.parse(
       localStorage.getItem(Constantes.cookieUsuarioActual)
     );
+    this.mostrarHome = true;
   }
 }
