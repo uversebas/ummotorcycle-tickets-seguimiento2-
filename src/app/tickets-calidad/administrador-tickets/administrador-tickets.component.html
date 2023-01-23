@@ -15,6 +15,19 @@
             <th class="all" style="text-align: justify;" id="date">Date</th>
             <th class="all" style="text-align: justify;" id="status">Status</th>
             <th class="all" style="text-align: justify;" id="verTicket" scope="col"></th>
+            <th class="none" style="text-align: justify;" id="status">User Manuals Status</th>
+            <th class="none" style="text-align: justify;" id="status">Vin List Status</th>
+            <th class="none" style="text-align: justify;" id="status">Vin Description Status</th>
+            <th class="none" style="text-align: justify;" id="status">Spare Parts Labeling Status</th>
+            <th class="none" style="text-align: justify;" id="status">Quality Report Status</th>
+            <th class="none" style="text-align: justify;" id="status">Shipping Documents Status</th>
+            <th class="none" style="text-align: justify;" id="status">PDI Manuals Status</th>
+            <th class="none" style="text-align: justify;" id="status">Service Manuals Status</th>
+            <th class="none" style="text-align: justify;" id="status">Homologation Status</th>
+            <th class="none" style="text-align: justify;" id="status">Technical Specification Status</th>
+            <th class="none" style="text-align: justify;" id="status">Photographs Status</th>
+            <th class="none" style="text-align: justify;" id="status">Parts Book Status</th>
+            <th class="none" style="text-align: justify;" id="status">Factory PIS tatus</th>
         </tr>
     </thead>
     <tbody>
@@ -28,6 +41,19 @@
                 <a tooltip="View ticket" class="icon text-white accion-solicitud"><em class="fas fa-eye"
                         routerLink="/tracing-tickets/view-request/{{solicitud.id}}" routerLinkActive="active"></em></a>
             </th>
+            <th scope="row" style="text-align: justify;">{{solicitud.estadoManualUsuario}}</th>
+            <th scope="row" style="text-align: justify;">{{solicitud.estadoVinList}}</th>
+            <th scope="row" style="text-align: justify;">{{solicitud.estadoVinDescription}}</th>
+            <th scope="row" style="text-align: justify;">{{solicitud.estadoSparePartsLabel}}</th>
+            <th scope="row" style="text-align: justify;">{{solicitud.estadoReporteCalidad}}</th>
+            <th scope="row" style="text-align: justify;">{{solicitud.estadoDocumentoEmbarque}}</th>
+            <th scope="row" style="text-align: justify;">{{solicitud.estadoManualPDI}}</th>
+            <th scope="row" style="text-align: justify;">{{solicitud.estadoManualesServicio}}</th>
+            <th scope="row" style="text-align: justify;">{{solicitud.estadoHomologacion}}</th>
+            <th scope="row" style="text-align: justify;">{{solicitud.estadoManualTecnico}}</th>
+            <th scope="row" style="text-align: justify;">{{solicitud.estadoFotografias}}</th>
+            <th scope="row" style="text-align: justify;">{{solicitud.estadoLibroPartes}}</th>
+            <th scope="row" style="text-align: justify;">{{solicitud.estadoFactoryPi}}</th>
         </tr>
     </tbody>
 </table>

@@ -181,6 +181,9 @@ export class CargarDocumentosComponent implements OnInit {
       case Constantes.bibliotecaDocumentosLibroPartes:
         this.enviarLibroPartes(gestion);
         break;
+      case Constantes.bibliotecaDocumentosFactoryPi:
+        this.enviarFactoryPI(gestion);
+        break;
       default:
         this.enviarTicket();
         break;
@@ -272,6 +275,14 @@ export class CargarDocumentosComponent implements OnInit {
       this.ticket.estadoLibroPartes === ProcessStatus.Approved ? this.enviarCorreoAprobarActividad() : this.mostrarMensajeExitoso(this.ticket.orden);
     });
   }
+  enviarFactoryPI(gestion: boolean) {
+    gestion === false ? this.ticket.estadoFactoryPi = ProcessStatus.Send : this.ticket.estadoFactoryPi = ProcessStatus.Approved;
+    this.validarEstadoTicket();
+    this.servicioTicket.enviarFactoryPI(this.ticket).then(() => {
+      this.ticket.estadoFactoryPi === ProcessStatus.Approved ? this.enviarCorreoAprobarActividad() : this.mostrarMensajeExitoso(this.ticket.orden);
+    });
+  }
+
   enviarTicket() {
     throw new Error('Method not implemented.');
   }
@@ -288,7 +299,8 @@ export class CargarDocumentosComponent implements OnInit {
       this.ticket.estadoHomologacion === ProcessStatus.Approved &&
       this.ticket.estadoManualTecnico === ProcessStatus.Approved &&
       this.ticket.estadoFotografias === ProcessStatus.Approved &&
-      this.ticket.estadoLibroPartes === ProcessStatus.Approved) {
+      this.ticket.estadoLibroPartes === ProcessStatus.Approved &&
+      this.ticket.estadoFactoryPi === ProcessStatus.Approved) {
       this.ticket.estado = TicketStatus.COMPLETED;
     }
   }
@@ -463,6 +475,12 @@ export class CargarDocumentosComponent implements OnInit {
           (this.usuarioActual.esAdministrador);
         this.mostrarBotonAprobar = this.ticket.estadoLibroPartes === ProcessStatus.Send && this.usuarioActual.esAdministrador;
         this.mostrarComentario = this.actividad.rol === this.actividad.aprobador && this.ticket.estadoLibroPartes === ProcessStatus.Pending;
+        break;
+      case Constantes.bibliotecaDocumentosFactoryPi:
+        this.mostrarEditarDocumentos = (this.ticket.estadoFactoryPi === ProcessStatus.Pending || this.ticket.estadoFactoryPi === ProcessStatus.Reject) &&
+          (this.ticket.usuarioSoporteLogistica.id === this.usuarioActual.id);
+        this.mostrarBotonAprobar = this.ticket.estadoFactoryPi === ProcessStatus.Send && this.usuarioActual.esAdministrador;
+        this.mostrarComentario = this.actividad.rol === this.actividad.aprobador && this.ticket.estadoFactoryPi === ProcessStatus.Pending;
         break;
       default:
         break;

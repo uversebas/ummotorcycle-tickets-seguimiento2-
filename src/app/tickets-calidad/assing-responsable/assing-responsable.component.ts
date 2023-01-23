@@ -120,6 +120,7 @@ export class AssingResponsableComponent implements OnInit {
     this.servicioDocumentos.crearCarpetaTicket(this.ticket.orden, Constantes.bibliotecaDocumentosFichaTecnica).then();
     this.servicioDocumentos.crearCarpetaTicket(this.ticket.orden, Constantes.bibliotecaDocumentosFotografias).then();
     this.servicioDocumentos.crearCarpetaTicket(this.ticket.orden, Constantes.bibliotecaDocumentosLibroPartes).then();
+    this.servicioDocumentos.crearCarpetaTicket(this.ticket.orden, Constantes.bibliotecaDocumentosFactoryPi).then();
     this.enviarCorreo();
   }
 

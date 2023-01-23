@@ -239,6 +239,17 @@ export class VerTicketComponent implements OnInit {
           return 'approve';
         }
         break;
+      case Constantes.bibliotecaDocumentosFactoryPi:
+        if (this.ticket.estadoFactoryPi === ProcessStatus.Pending || this.ticket.estadoFactoryPi === ProcessStatus.Send) {
+          return 'pending';
+        }
+        if (this.ticket.estadoFactoryPi === ProcessStatus.Reject) {
+          return 'reject';
+        }
+        if (this.ticket.estadoFactoryPi === ProcessStatus.Approved) {
+          return 'approve';
+        }
+        break;
       default:
         break;
     }
@@ -330,7 +341,7 @@ export class VerTicketComponent implements OnInit {
 
   private validarMostrar(): void {
     this.mostrarAsignacionResponsables = this.ticket.estado === TicketStatus.CREATED && this.usuarioActual.esAdministrador;
-    this.mostrarZonaDocumentos = this.ticket.estado === TicketStatus.ASSIGNED;
+    this.mostrarZonaDocumentos = this.ticket.estado === TicketStatus.ASSIGNED || this.ticket.estado === TicketStatus.COMPLETED;
     this.mostrarDocumentosIniciales = true;
     this.mostrarEdicionDocumentosIniciales = this.ticket.estado === TicketStatus.REJECTCREATED;
   }
