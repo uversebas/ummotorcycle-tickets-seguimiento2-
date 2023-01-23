@@ -372,6 +372,17 @@ export class TicketService {
     });
   }
 
+  public rechazoFactoryPI(
+    ticket: Ticket, comentario: string): Promise<IItemUpdateResult> {
+    return Constantes.getConfig(environment.web)
+    .web.lists.getByTitle(Constantes.listaTicket)
+    .items.getById(ticket.id)
+    .update({
+      Comments: comentario,
+      FactoryPIStatus: ticket.estadoFactoryPi
+    });
+  }
+
   public enviarManualUsuario(
     ticket: Ticket): Promise<IItemUpdateResult> {
     return Constantes.getConfig(environment.web)
@@ -511,6 +522,18 @@ export class TicketService {
     .items.getById(ticket.id)
     .update({
       PartsBookStatus: ticket.estadoLibroPartes,
+      Status: ticket.estado,
+      ApproveComment: ticket.comentarioAprobacionAutomarica
+    });
+  }
+
+  public enviarFactoryPI(
+    ticket: Ticket): Promise<IItemUpdateResult> {
+    return Constantes.getConfig(environment.web)
+    .web.lists.getByTitle(Constantes.listaTicket)
+    .items.getById(ticket.id)
+    .update({
+      FactoryPIStatus: ticket.estadoFactoryPi,
       Status: ticket.estado,
       ApproveComment: ticket.comentarioAprobacionAutomarica
     });

@@ -19,6 +19,7 @@ export class Constantes {
   static bibliotecaDocumentosFichaTecnica = 'TechnicalSpecification';
   static bibliotecaDocumentosFotografias = 'Photographs';
   static bibliotecaDocumentosLibroPartes = 'PartsBook';
+  static bibliotecaDocumentosFactoryPi = 'FactoryPI';
   static listaPlantillaEmails = 'EmailTemplate';
 
   static cookieUsuarioActual = 'usuarioActual';

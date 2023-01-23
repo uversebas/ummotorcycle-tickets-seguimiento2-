@@ -26,6 +26,7 @@ export class Ticket {
   public estadoManualTecnico: ProcessStatus;
   public estadoFotografias: ProcessStatus;
   public estadoLibroPartes: ProcessStatus;
+  public estadoFactoryPi: ProcessStatus;
 
 
 
@@ -113,6 +114,7 @@ export class Ticket {
     ticket.estadoManualTecnico = element.DataSheetStatus;
     ticket.estadoFotografias = element.PhotographsStatus;
     ticket.estadoLibroPartes = element.PartsBookStatus;
+    ticket.estadoFactoryPi = element.FactoryPIStatus;
 
     ticket.usuarioAdministrador = usuarioAdministrador;
     ticket.usuarioMarketing = usuarioMarketing;

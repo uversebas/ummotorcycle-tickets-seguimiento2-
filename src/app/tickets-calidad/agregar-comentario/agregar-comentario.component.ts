@@ -106,6 +106,9 @@ export class AgregarComentarioComponent implements OnInit {
       case Constantes.bibliotecaDocumentosLibroPartes:
         this.rechazarLibroPartes();
         break;
+      case Constantes.bibliotecaDocumentosFactoryPi:
+        this.rechazarFactoryPI();
+        break;
       default:
         this.rechazoTicket();
         break;
@@ -192,6 +195,13 @@ export class AgregarComentarioComponent implements OnInit {
   rechazarLibroPartes() {
     this.ticket.estadoLibroPartes = ProcessStatus.Reject
     this.servicioTicket.rechazoLibroPartes(this.ticket, this.f.comentario.value).then(() => {
+      this.cerrarModal();
+      this.enviarCorreoRechazoActividad();
+    });
+  }
+  rechazarFactoryPI() {
+    this.ticket.estadoFactoryPi = ProcessStatus.Reject
+    this.servicioTicket.rechazoFactoryPI(this.ticket, this.f.comentario.value).then(() => {
       this.cerrarModal();
       this.enviarCorreoRechazoActividad();
     });

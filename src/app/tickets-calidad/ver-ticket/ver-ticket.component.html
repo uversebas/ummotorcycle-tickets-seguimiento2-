@@ -116,7 +116,7 @@
         </fieldset>
         <br>
         <div class="line"></div>
-        <fieldset class="col-12 col-lg-12 px3">
+        <fieldset class="col-12 col-lg-12 px3" *ngIf="usuarioActual.esAdministrador || usuarioActual.esMarketing || usuarioActual.esComercial">
           <legend>Activities</legend>
           <accordion [closeOthers]="true" style="margin-top:5px;">
             <accordion-group *ngFor="let actividad of actividades; let i = index;" #groupval style="margin-top:5px;">
