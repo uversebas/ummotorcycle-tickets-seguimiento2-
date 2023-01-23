@@ -22,23 +22,14 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.spinner.show();
-    this.obtenerUsuarioCookie();
-    this.obtenerRolesUsuario();
+    this.obtenerUsuarioActual();
     this.spinner.hide();
   }
 
-  private obtenerUsuarioCookie(): void {
+  private async obtenerUsuarioActual(): Promise<void> {
+    await this.servicioUsuario.ObtenerUsuario();
     this.usuarioActual = JSON.parse(
       localStorage.getItem(Constantes.cookieUsuarioActual)
     );
-  }
-
-  public async obtenerRolesUsuario(): Promise<void> {
-    this.esAdministrador = this.usuarioActual.esAdministrador;
-  }
-
-  private async asignacionRolesUsuario(usuarioActual: Usuario): Promise<void> {
-    const grupos = await this.servicioUsuario.ObtenerGruposPorUsuario(usuarioActual);
-    Usuario.asignarGrupo(grupos, usuarioActual);
   }
 }
