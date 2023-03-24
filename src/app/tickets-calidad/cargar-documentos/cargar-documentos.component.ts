@@ -406,37 +406,37 @@ export class CargarDocumentosComponent implements OnInit {
     switch (this.actividad.biblioteca) {
       case Constantes.bibliotecaDocumentosManualesUsuario:
         this.mostrarEditarDocumentos = (this.ticket.estadoManualUsuario === ProcessStatus.Pending || this.ticket.estadoManualUsuario === ProcessStatus.Reject) &&
-          (this.ticket.usuarioMarketing.id === this.usuarioActual.id);
+          ((this.ticket.usuarioMarketing.id === this.usuarioActual.id) || this.usuarioActual.esAdministrador);
         this.mostrarBotonAprobar = this.ticket.estadoManualUsuario === ProcessStatus.Send && this.ticket.usuarioMarketing.id === this.usuarioActual.id;
         this.mostrarComentario = this.actividad.rol === this.actividad.aprobador && this.ticket.estadoManualUsuario === ProcessStatus.Pending;
         break;
       case Constantes.bibliotecaDocumentosVinList:
         this.mostrarEditarDocumentos = (this.ticket.estadoVinList === ProcessStatus.Pending || this.ticket.estadoVinList === ProcessStatus.Reject) &&
-          (this.ticket.usuarioCalidad.id === this.usuarioActual.id);
+          ((this.ticket.usuarioCalidad.id === this.usuarioActual.id) || this.usuarioActual.esAdministrador);
         this.mostrarBotonAprobar = this.ticket.estadoVinList === ProcessStatus.Send && this.usuarioActual.esAdministrador;
         this.mostrarComentario = this.actividad.rol === this.actividad.aprobador && this.ticket.estadoVinList === ProcessStatus.Pending;
         break;
       case Constantes.bibliotecaDocumentosVinDescription:
         this.mostrarEditarDocumentos = (this.ticket.estadoVinDescription === ProcessStatus.Pending || this.ticket.estadoVinDescription === ProcessStatus.Reject) &&
-          (this.ticket.usuarioCalidad.id === this.usuarioActual.id);
+          ((this.ticket.usuarioCalidad.id === this.usuarioActual.id) || this.usuarioActual.esAdministrador);
         this.mostrarBotonAprobar = this.ticket.estadoVinDescription === ProcessStatus.Send && this.usuarioActual.esSoporteLogistica;
         this.mostrarComentario = this.actividad.rol === this.actividad.aprobador && this.ticket.estadoVinDescription === ProcessStatus.Pending;
         break;
       case Constantes.bibliotecaDocumentosSparePartsLabeling:
         this.mostrarEditarDocumentos = (this.ticket.estadoSparePartsLabel === ProcessStatus.Pending || this.ticket.estadoSparePartsLabel === ProcessStatus.Reject) &&
-          (this.usuarioActual.esSoporteLogistica);
+          ((this.ticket.usuarioSoporteLogistica.id === this.usuarioActual.id) || this.usuarioActual.esAdministrador);
         this.mostrarBotonAprobar = this.ticket.estadoSparePartsLabel === ProcessStatus.Send && this.usuarioActual.esSoporteLogistica;
         this.mostrarComentario = this.actividad.rol === this.actividad.aprobador && this.ticket.estadoSparePartsLabel === ProcessStatus.Pending;
         break;
       case Constantes.bibliotecaDocumentosReporteCalidad:
         this.mostrarEditarDocumentos = (this.ticket.estadoReporteCalidad === ProcessStatus.Pending || this.ticket.estadoReporteCalidad === ProcessStatus.Reject) &&
-          (this.ticket.usuarioCalidad.id === this.usuarioActual.id);
+          ((this.ticket.usuarioCalidad.id === this.usuarioActual.id) || this.usuarioActual.esAdministrador);
         this.mostrarBotonAprobar = this.ticket.estadoReporteCalidad === ProcessStatus.Send && this.usuarioActual.esSoporteLogistica;
         this.mostrarComentario = this.actividad.rol === this.actividad.aprobador && this.ticket.estadoReporteCalidad === ProcessStatus.Pending;
         break;
       case Constantes.bibliotecaDocumentosEmbarque:
         this.mostrarEditarDocumentos = (this.ticket.estadoDocumentoEmbarque === ProcessStatus.Pending || this.ticket.estadoDocumentoEmbarque === ProcessStatus.Reject) &&
-          (this.ticket.usuarioCalidad.id === this.usuarioActual.id);
+          ((this.ticket.usuarioCalidad.id === this.usuarioActual.id) || this.usuarioActual.esAdministrador);
         this.mostrarBotonAprobar = this.ticket.estadoDocumentoEmbarque === ProcessStatus.Send && this.usuarioActual.esAdministrador;
         this.mostrarComentario = this.actividad.rol === this.actividad.aprobador && this.ticket.estadoDocumentoEmbarque === ProcessStatus.Pending;
         break;
@@ -448,7 +448,7 @@ export class CargarDocumentosComponent implements OnInit {
         break;
       case Constantes.bibliotecaDocumentosManualesServicio:
         this.mostrarEditarDocumentos = (this.ticket.estadoManualesServicio === ProcessStatus.Pending || this.ticket.estadoManualesServicio === ProcessStatus.Reject) &&
-          (this.ticket.usuarioCalidad.id === this.usuarioActual.id);
+          ((this.ticket.usuarioCalidad.id === this.usuarioActual.id) || this.usuarioActual.esAdministrador);
         this.mostrarBotonAprobar = this.ticket.estadoManualesServicio === ProcessStatus.Send && this.usuarioActual.esSoporteLogistica;
         this.mostrarComentario = this.actividad.rol === this.actividad.aprobador && this.ticket.estadoManualesServicio === ProcessStatus.Pending;
         break;
@@ -460,25 +460,25 @@ export class CargarDocumentosComponent implements OnInit {
         break;
       case Constantes.bibliotecaDocumentosFichaTecnica:
         this.mostrarEditarDocumentos = (this.ticket.estadoManualTecnico === ProcessStatus.Pending || this.ticket.estadoManualTecnico === ProcessStatus.Reject) &&
-          (this.ticket.usuarioCalidad.id === this.usuarioActual.id);
+          ((this.ticket.usuarioCalidad.id === this.usuarioActual.id) || this.usuarioActual.esAdministrador);
         this.mostrarBotonAprobar = this.ticket.estadoManualTecnico === ProcessStatus.Send && this.usuarioActual.esSoporteLogistica;
         this.mostrarComentario = this.actividad.rol === this.actividad.aprobador && this.ticket.estadoManualTecnico === ProcessStatus.Pending;
         break;
       case Constantes.bibliotecaDocumentosFotografias:
         this.mostrarEditarDocumentos = (this.ticket.estadoFotografias === ProcessStatus.Pending || this.ticket.estadoFotografias === ProcessStatus.Reject) &&
-          (this.ticket.usuarioCalidad.id === this.usuarioActual.id);
+          ((this.ticket.usuarioCalidad.id === this.usuarioActual.id) || this.usuarioActual.esAdministrador);
         this.mostrarBotonAprobar = this.ticket.estadoFotografias === ProcessStatus.Send && (this.ticket.usuarioMarketing.id === this.usuarioActual.id);
         this.mostrarComentario = this.actividad.rol === this.actividad.aprobador && this.ticket.estadoFotografias === ProcessStatus.Pending;
         break;
       case Constantes.bibliotecaDocumentosLibroPartes:
         this.mostrarEditarDocumentos = (this.ticket.estadoLibroPartes === ProcessStatus.Pending || this.ticket.estadoLibroPartes === ProcessStatus.Reject) &&
-          (this.ticket.usuarioCalidad.id === this.usuarioActual.id);
+          ((this.ticket.usuarioCalidad.id === this.usuarioActual.id) || this.usuarioActual.esAdministrador);
         this.mostrarBotonAprobar = this.ticket.estadoLibroPartes === ProcessStatus.Send && this.usuarioActual.esSoporteLogistica;
         this.mostrarComentario = this.actividad.rol === this.actividad.aprobador && this.ticket.estadoLibroPartes === ProcessStatus.Pending;
         break;
       case Constantes.bibliotecaDocumentosFactoryPi:
         this.mostrarEditarDocumentos = (this.ticket.estadoFactoryPi === ProcessStatus.Pending || this.ticket.estadoFactoryPi === ProcessStatus.Reject) &&
-          (this.ticket.usuarioSoporteLogistica.id === this.usuarioActual.id);
+          ((this.ticket.usuarioSoporteLogistica.id === this.usuarioActual.id) || this.usuarioActual.esAdministrador);
         this.mostrarBotonAprobar = this.ticket.estadoFactoryPi === ProcessStatus.Send && this.usuarioActual.esAdministrador;
         this.mostrarComentario = this.actividad.rol === this.actividad.aprobador && this.ticket.estadoFactoryPi === ProcessStatus.Pending;
         break;
