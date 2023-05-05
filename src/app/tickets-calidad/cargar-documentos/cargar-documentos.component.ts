@@ -478,7 +478,7 @@ export class CargarDocumentosComponent implements OnInit {
         break;
       case Constantes.bibliotecaDocumentosFactoryPi:
         this.mostrarEditarDocumentos = (this.ticket.estadoFactoryPi === ProcessStatus.Pending || this.ticket.estadoFactoryPi === ProcessStatus.Reject) &&
-          ((this.ticket.usuarioSoporteLogistica.id === this.usuarioActual.id) || this.usuarioActual.esAdministrador);
+          ((this.ticket.usuarioCalidad.id === this.usuarioActual.id) || this.usuarioActual.esAdministrador);
         this.mostrarBotonAprobar = this.ticket.estadoFactoryPi === ProcessStatus.Send && this.usuarioActual.esAdministrador;
         this.mostrarComentario = this.actividad.rol === this.actividad.aprobador && this.ticket.estadoFactoryPi === ProcessStatus.Pending;
         break;
