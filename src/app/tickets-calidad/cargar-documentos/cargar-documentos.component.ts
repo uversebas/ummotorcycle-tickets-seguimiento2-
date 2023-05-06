@@ -248,7 +248,7 @@ export class CargarDocumentosComponent implements OnInit {
     });
   }
   enviarHomologacion(gestion: boolean) {
-    this.ticket.estadoHomologacion = ProcessStatus.Approved;
+    gestion === false ? this.ticket.estadoHomologacion = ProcessStatus.Send : this.ticket.estadoHomologacion = ProcessStatus.Approved;
     this.validarEstadoTicket();
     this.servicioTicket.enviarHomologacion(this.ticket).then(() => {
       this.ticket.estadoHomologacion === ProcessStatus.Approved ? this.enviarCorreoAprobarActividad() : this.mostrarMensajeExitoso(this.ticket.orden);
@@ -269,7 +269,7 @@ export class CargarDocumentosComponent implements OnInit {
     });
   }
   enviarLibroPartes(gestion: boolean) {
-    this.ticket.estadoLibroPartes = ProcessStatus.Approved;
+    gestion === false ? this.ticket.estadoLibroPartes = ProcessStatus.Send : this.ticket.estadoLibroPartes = ProcessStatus.Approved;
     this.validarEstadoTicket();
     this.servicioTicket.enviarLibroPartes(this.ticket).then(() => {
       this.ticket.estadoLibroPartes === ProcessStatus.Approved ? this.enviarCorreoAprobarActividad() : this.mostrarMensajeExitoso(this.ticket.orden);
