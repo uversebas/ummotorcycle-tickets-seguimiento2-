@@ -327,12 +327,14 @@ export class CargarDocumentosComponent implements OnInit {
   }
 
   private mostrarMensajeExitoso(orden: string): void {
-    this.spinner.hide();
-    this.servicioNotificacion.Exito(
-      'Great!',
-      'The order ' + orden + ' has been processes successfully.',
-      () => window.location.reload()
-    );
+    setTimeout(() => {
+      this.spinner.hide();
+      this.servicioNotificacion.Exito(
+        'Great!',
+        'The order ' + orden + ' has been processes successfully.',
+        () => window.location.reload()
+      );
+    }, 15000);
   }
 
   private mostrarAlertaError(titulo: string, error: any): void {

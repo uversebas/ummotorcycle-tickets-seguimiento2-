@@ -33,7 +33,7 @@ export class SolicitudesMarketingComponent implements OnInit {
     }
 
     private consultarSolicitudes(): void {
-      this.servicioTicket.obtenerTicketsSoporte().subscribe(
+      this.servicioTicket.obtenerTicketsMarketing().subscribe(
         (respuesta) => {
           this.solicitudes = Ticket.fromJsonList(respuesta);
           this.dtTrigger.next();
